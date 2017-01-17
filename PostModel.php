@@ -8,7 +8,7 @@ namespace App\Models;
  * Class PostModel
  * @package App\Models
  */
-final class PostModel extends BasePostModel
+class PostModel extends BasePostModel
 {
 	/**
 	 * PostModel constructor.
