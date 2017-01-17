@@ -12,9 +12,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "App\\Models\\BasePostModel\\": "BasePostModel.php",
-      "App\\Models\\PostModel\\": "PostModel.php",
-      "App\\Models\\PageModel\\": "PageModel.php"
+      "App\\Models\\": "Models/"
     }
   },
   "require": {
