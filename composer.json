@@ -1,6 +1,6 @@
 {
-    "name": "themosis/models",
-    "description": "Multiple Models to retrieve data for the Themosis Framework",
+    "name": "dannyvanholten/themosis-models",
+    "description": "Multiple Models (Post Taxonomies) for the Themosis Framework",
     "type": "project",
     "license": "GPL-3.0+",
     "authors": [
