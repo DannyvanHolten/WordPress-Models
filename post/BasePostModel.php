@@ -117,7 +117,6 @@ abstract class BasePostModel
 	 * Find a single post by ID.
 	 *
 	 * @see BasePostModel::id()
-	 * @see BasePostModel::whereIn()
 	 * @see BasePostModel::first()
 	 * @see BasePostModel::get()
 	 *
@@ -131,15 +130,8 @@ abstract class BasePostModel
 	{
 		$instance = new static;
 
-		if (is_array($id)) {
-			return $instance->whereIn($id)
-				->take(-1)
-				->get();
-
-		} else {
-			return $instance->id($id)
-				->first();
-		}
+		return $instance->id($id)
+			->first();
 	}
 
 	/**
@@ -235,26 +227,91 @@ abstract class BasePostModel
 	}
 
 	/**
-	 * Get exactly one post. Find by ID
+	 * Get the posts matching the ID's
+	 * accepts an integer or an array
 	 *
 	 * @see https://codex.wordpress.org/Class_Reference/WP_Query#Post_.26_Page_Parameters
 	 *
 	 * @example ExampleModel::id(1)->first();
+	 * @example ExampleModel::id([1,2,3], true)->get();
+	 * @example ExampleModel::id()->first();
 	 *
-	 * @param null|int $id
+	 * @param null|int|array $id
+	 * @param bool $exclude
 	 * @return $this
 	 */
-	protected function id($id = null)
+	protected function id($id = null, $exclude = false)
 	{
-		if ($id == null) {
+
+		if (is_array($id) && $exclude === false) {
+			$this->args['post__in'] = $id;
+		} elseif (is_array($id) && $exclude === true) {
+			$this->args['post__not_in'] = $id;
+		} elseif ($exclude === true) {
+			$this->args['post__not_in'] = [$id];
+		} elseif ($id === null) {
 			global $post;
 
 			if ($post) {
-				$id = $post->ID;
+				$this->args['p'] = $post->ID;
 			}
+		} else {
+			$this->args['p'] = $id;
 		}
 
-		$this->args['p'] = $id;
+		return $this;
+	}
+
+	/**
+	 * Exclude certain posts
+	 * Note: You can enter either an integer or an array.
+	 *
+	 * @see https://codex.wordpress.org/Class_Reference/WP_Query#Post_.26_Page_Parameters
+	 *
+	 * @example ExampleModel:::all()->exclude(10)->get();
+	 * @example ExampleModel::archive()->exclude([10,20,30])->paginate();
+	 *
+	 * @param string|array $exclude
+	 * @return $this
+	 */
+	protected
+	function whereIn(
+		$include = null
+	) {
+		if ($include !== null) {
+			if (!is_array($include)) {
+				$include = [$include];
+			}
+
+			$this->args['post__in'] = $include;
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Exclude certain posts
+	 * Note: You can enter either an integer or an array.
+	 *
+	 * @see https://codex.wordpress.org/Class_Reference/WP_Query#Post_.26_Page_Parameters
+	 *
+	 * @example ExampleModel:::all()->exclude(10)->get();
+	 * @example ExampleModel::archive()->exclude([10,20,30])->paginate();
+	 *
+	 * @param null|int|array $exclude
+	 * @return $this
+	 */
+	protected
+	function whereNotIn(
+		$exclude = null
+	) {
+		if ($exclude !== null) {
+			if (!is_array($exclude)) {
+				$exclude = [$exclude];
+			}
+
+			$this->args['post__not_in'] = $exclude;
+		}
 
 		return $this;
 	}
@@ -273,8 +330,12 @@ abstract class BasePostModel
 	 * @param null|string $meta_key
 	 * @return $this
 	 */
-	protected function orderBy($orderBy, $order = null, $meta_key = null)
-	{
+	protected
+	function orderBy(
+		$orderBy,
+		$order = null,
+		$meta_key = null
+	) {
 
 		$this->args['orderby'] = $orderBy;
 
@@ -301,8 +362,10 @@ abstract class BasePostModel
 	 * @param null|int $paged
 	 * @return $this
 	 */
-	protected function paged($paged = null)
-	{
+	protected
+	function paged(
+		$paged = null
+	) {
 		if ($paged == null) {
 			$paged = get_query_var('paged');
 		}
@@ -322,8 +385,10 @@ abstract class BasePostModel
 	 * @param null|int $skip
 	 * @return $this
 	 */
-	protected function skip($skip = 0)
-	{
+	protected
+	function skip(
+		$skip = 0
+	) {
 		if ($skip != 0) {
 			$this->args['offset'] = $skip;
 		}
@@ -343,8 +408,10 @@ abstract class BasePostModel
 	 * @param null|int $take
 	 * @return $this
 	 */
-	protected function take($take = null)
-	{
+	protected
+	function take(
+		$take = null
+	) {
 		if ($take !== null) {
 			$this->args['posts_per_page'] = $take;
 		}
@@ -365,8 +432,10 @@ abstract class BasePostModel
 	 * @param null|string|array $postType
 	 * @return $this
 	 */
-	protected function type($postType = null)
-	{
+	protected
+	function type(
+		$postType = null
+	) {
 		if ($postType !== null) {
 			$this->args['post_type'] = $postType;
 		}
@@ -388,8 +457,13 @@ abstract class BasePostModel
 	 * @param string $meta_relation
 	 * @return $this
 	 */
-	protected function where($meta_key, $meta_value, $meta_compare = '=', $meta_relation = 'AND')
-	{
+	protected
+	function where(
+		$meta_key,
+		$meta_value,
+		$meta_compare = '=',
+		$meta_relation = 'AND'
+	) {
 		// Check if there already is a query. If not, create a relation field first
 		if (!isset($this->args['meta_query'])) {
 			$this->args['meta_query'] = [
@@ -432,8 +506,13 @@ abstract class BasePostModel
 	 * @param string $meta_relation
 	 * @return $this
 	 */
-	protected function whereDate($date_value, $date_compare = null, $date_inclusive = false, $meta_relation = 'AND')
-	{
+	protected
+	function whereDate(
+		$date_value,
+		$date_compare = null,
+		$date_inclusive = false,
+		$meta_relation = 'AND'
+	) {
 		// Check if there already is a query. If not, create a relation field first
 		if (!isset($this->args['date_query'])) {
 			$this->args['date_query'] = [
@@ -466,56 +545,6 @@ abstract class BasePostModel
 	}
 
 	/**
-	 * Exclude certain posts
-	 * Note: You can enter either an integer or an array.
-	 *
-	 * @see https://codex.wordpress.org/Class_Reference/WP_Query#Post_.26_Page_Parameters
-	 *
-	 * @example ExampleModel:::all()->exclude(10)->get();
-	 * @example ExampleModel::archive()->exclude([10,20,30])->paginate();
-	 *
-	 * @param string|array $exclude
-	 * @return $this
-	 */
-	protected function whereIn($include = null)
-	{
-		if ($include !== null) {
-			if (!is_array($include)) {
-				$include = [$include];
-			}
-
-			$this->args['post__in'] = $include;
-		}
-
-		return $this;
-	}
-
-	/**
-	 * Exclude certain posts
-	 * Note: You can enter either an integer or an array.
-	 *
-	 * @see https://codex.wordpress.org/Class_Reference/WP_Query#Post_.26_Page_Parameters
-	 *
-	 * @example ExampleModel:::all()->exclude(10)->get();
-	 * @example ExampleModel::archive()->exclude([10,20,30])->paginate();
-	 *
-	 * @param null|int|array $exclude
-	 * @return $this
-	 */
-	protected function whereNotIn($exclude = null)
-	{
-		if ($exclude !== null) {
-			if (!is_array($exclude)) {
-				$exclude = [$exclude];
-			}
-
-			$this->args['post__not_in'] = $exclude;
-		}
-
-		return $this;
-	}
-
-	/**
 	 * Get pages with by a certain meta query.
 	 *
 	 * @see https://codex.wordpress.org/Class_Reference/WP_Query#Taxonomy_Parameters
@@ -528,7 +557,8 @@ abstract class BasePostModel
 	 * @param string $tax_compare
 	 * @return $this
 	 */
-	protected function whereTax(
+	protected
+	function whereTax(
 		$tax_key,
 		$tax_terms,
 		$tax_compare = '=',
@@ -573,7 +603,8 @@ abstract class BasePostModel
 	 *
 	 * @return array
 	 */
-	public function get()
+	public
+	function get()
 	{
 		$this->runQuery()
 			->appendAcfFields()
@@ -600,7 +631,8 @@ abstract class BasePostModel
 	 *
 	 * @return mixed
 	 */
-	public function paginate()
+	public
+	function paginate()
 	{
 		$this->paged()
 			->runQuery()
@@ -623,7 +655,8 @@ abstract class BasePostModel
 	 *
 	 * @return \WP_Post
 	 */
-	public function first()
+	public
+	function first()
 	{
 		$this->take(1)
 			->get();
@@ -645,7 +678,8 @@ abstract class BasePostModel
 	 *
 	 * @return array
 	 */
-	public function count()
+	public
+	function count()
 	{
 		if (!isset($this->query->found_posts)) {
 			$this->runQuery();
@@ -663,7 +697,8 @@ abstract class BasePostModel
 	 *
 	 * @return $this
 	 */
-	private function runQuery()
+	private
+	function runQuery()
 	{
 		if (!isset($this->query->posts)) {
 			$this->query = new WP_Query($this->args);
@@ -686,7 +721,8 @@ abstract class BasePostModel
 	 *
 	 * @return $this
 	 */
-	private function appendAcfFields()
+	private
+	function appendAcfFields()
 	{
 		if (function_exists('get_fields')) {
 			foreach ($this->query->posts as $post) {
@@ -704,7 +740,8 @@ abstract class BasePostModel
 	 *
 	 * @return $this
 	 */
-	private function appendContent()
+	private
+	function appendContent()
 	{
 		foreach ($this->query->posts as $post) {
 			$post->post_content = apply_filters('the_content', $post->post_content);
@@ -720,7 +757,8 @@ abstract class BasePostModel
 	 *
 	 * @return $this
 	 */
-	private function appendExcerpt()
+	private
+	function appendExcerpt()
 	{
 		foreach ($this->query->posts as $post) {
 
@@ -743,7 +781,8 @@ abstract class BasePostModel
 	 *
 	 * @return $this
 	 */
-	private function appendPagination()
+	private
+	function appendPagination()
 	{
 		if (function_exists('wp_pagenavi')) {
 
@@ -767,7 +806,8 @@ abstract class BasePostModel
 	 *
 	 * @return $this
 	 */
-	private function appendPermalink()
+	private
+	function appendPermalink()
 	{
 		foreach ($this->query->posts as $post) {
 			$post->permalink = get_the_permalink($post->ID);
