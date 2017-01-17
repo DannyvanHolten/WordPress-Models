@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use WP_Query;
+use WP_Post;
 use Input;
 use Config;
 
@@ -130,8 +131,13 @@ abstract class BasePostModel
 	{
 		$instance = new static;
 
-		return $instance->id($id)
-			->first();
+		$instance->id($id);
+
+		if (is_array($id)) {
+			return $instance->get();
+		} else {
+			return $instance->first();
+		}
 	}
 
 	/**
@@ -172,6 +178,10 @@ abstract class BasePostModel
 	 * Return Posts where they are by a certain author
 	 *
 	 * @see https://developer.wordpress.org/reference/classes/wp_query/#author-parameters
+	 * @see https://developer.wordpress.org/reference/functions/get_current_user_id/
+	 *
+	 * @example ExampleModel::by('me')->get()
+	 * @example ExampleModel::by(1)->first()
 	 *
 	 * @param null $author
 	 * @param bool $exclude
@@ -231,6 +241,7 @@ abstract class BasePostModel
 	 * accepts an integer or an array
 	 *
 	 * @see https://developer.wordpress.org/reference/classes/wp_query/#post-page-parameters
+	 * @see https://developer.wordpress.org/reference/functions/get_queried_object/
 	 *
 	 * @example ExampleModel::id(1)->first();
 	 * @example ExampleModel::id([1,2,3], true)->get();
@@ -250,10 +261,12 @@ abstract class BasePostModel
 		} elseif ($exclude === true) {
 			$this->args['post__not_in'] = [$id];
 		} elseif ($id === null) {
-			global $post;
+			$queriedObject = get_queried_object();
 
-			if ($post) {
-				$this->args['p'] = $post->ID;
+			if ($queriedObject instanceof WP_Post) {
+				$this->args['p'] = $queriedObject->ID;
+			} else {
+				throw new \Exception('BasePostModel::id is null and cannot verify the queried object is a WP_Post object');
 			}
 		} else {
 			$this->args['p'] = $id;
@@ -336,11 +349,11 @@ abstract class BasePostModel
 
 		$this->args['orderby'] = $orderBy;
 
-		if ($order != null) {
+		if ($order !== null) {
 			$this->args['order'] = $order;
 		}
 
-		if ($meta_key != null) {
+		if ($meta_key !== null) {
 			$this->args['meta_key'] = $meta_key;
 		}
 
@@ -352,6 +365,7 @@ abstract class BasePostModel
 	 * Will be used when you call ->paginate();
 	 *
 	 * @see https://developer.wordpress.org/reference/classes/wp_query/#pagination-parameters
+	 * @see https://developer.wordpress.org/reference/functions/get_query_var/
 	 * @see BasePostModel::paginate()
 	 *
 	 * @example ExampleModel::take(10)->paginate();
@@ -384,7 +398,7 @@ abstract class BasePostModel
 	protected function skip(
 		$skip = 0
 	) {
-		if ($skip != 0) {
+		if ($skip !== 0) {
 			$this->args['offset'] = $skip;
 		}
 
@@ -487,7 +501,7 @@ abstract class BasePostModel
 	 * or an array containing any of the following [year, month, day, hour, minute, second]
 	 *
 	 * @see https://developer.wordpress.org/reference/classes/wp_query/#date-parameters
-	 * @see http://php.net/manual/en/function.strtotime.php
+	 * @see https://developer.wordpress.org/reference/functions/date_i18n/
 	 *
 	 * @example ExampleModel::whereDate(['year' => 2016)->get();
 	 * @example ExampleModel::whereDate('1-1-2017', 'after', true)->get();
@@ -605,6 +619,28 @@ abstract class BasePostModel
 	}
 
 	/**
+	 * Get the first result of our Query
+	 *
+	 * @see BasePostModel::take();
+	 * @see BasePostModel::get();
+	 *
+	 * @example ExampleModel::id(1)->first();
+	 *
+	 * @return \WP_Post
+	 */
+	public function first()
+	{
+		$this->take(1)
+			->get();
+
+		if ($this->query->posts) {
+			return $this->query->posts[0];
+		}
+
+		return false;
+	}
+
+	/**
 	 * Parse our query and execute all the functions to make our content super fancy
 	 * and return it paginated
 	 *
@@ -634,28 +670,6 @@ abstract class BasePostModel
 	}
 
 	/**
-	 * Get the first result of our Query
-	 *
-	 * @see BasePostModel::take();
-	 * @see BasePostModel::get();
-	 *
-	 * @example ExampleModel::id(1)->first();
-	 *
-	 * @return \WP_Post
-	 */
-	public function first()
-	{
-		$this->take(1)
-			->get();
-
-		if ($this->query->posts) {
-			return $this->query->posts[0];
-		}
-
-		return false;
-	}
-
-	/**
 	 * Count the results of our Query
 	 *
 	 * @see https://developer.wordpress.org/reference/classes/wp_query/#properties
@@ -672,31 +686,6 @@ abstract class BasePostModel
 		}
 
 		return $this->query->found_posts;
-	}
-
-	/**
-	 * Create a new query
-	 *
-	 * @see https://developer.wordpress.org/reference/classes/wp_query/
-	 * @see https://www.relevanssi.com/user-manual/functions/#relevanssi_do_query
-	 * @see WP_QUERY
-	 *
-	 * @return $this
-	 */
-	private function runQuery()
-	{
-		if (!isset($this->query->posts)) {
-			$this->query = new WP_Query($this->args);
-		}
-
-		/*
-		 * Execute the revelanssi query function if relavanssi is active.
-		 */
-		if (isset($this->args['s']) && function_exists('relevanssi_do_query')) {
-			relevanssi_do_query($this->query);
-		}
-
-		return $this;
 	}
 
 	/**
@@ -736,7 +725,9 @@ abstract class BasePostModel
 	/**
 	 * Make our excerpt fancy!
 	 *
+	 * @see https://developer.wordpress.org/reference/functions/strip_shortcodes/
 	 * @see https://developer.wordpress.org/reference/functions/apply_filters/
+	 * @see https://developer.wordpress.org/reference/functions/wpautop/
 	 *
 	 * @return $this
 	 */
@@ -747,7 +738,7 @@ abstract class BasePostModel
 			if ($post->post_excerpt == '') {
 				$post->post_excerpt = strip_shortcodes($post->post_content);
 				$post->post_excerpt = apply_filters('the_content', $post->post_excerpt);
-				$post->post_excerpt = substr(strip_tags($post->post_excerpt), 0, Config::get('theme.excerpt-length'));
+				$post->post_excerpt = substr(strip_tags($post->post_excerpt), 0, Config::get('theme.excerpt-length') ?: 120 );
 			}
 
 			$post->post_excerpt = wpautop($post->post_excerpt); //Used because we always want <p> tags around the excerpt
@@ -791,6 +782,31 @@ abstract class BasePostModel
 	{
 		foreach ($this->query->posts as $post) {
 			$post->permalink = get_the_permalink($post->ID);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Create a new query
+	 *
+	 * @see https://developer.wordpress.org/reference/classes/wp_query/
+	 * @see https://www.relevanssi.com/user-manual/functions/#relevanssi_do_query
+	 * @see WP_QUERY
+	 *
+	 * @return $this
+	 */
+	private function runQuery()
+	{
+		if (!isset($this->query->posts)) {
+			$this->query = new WP_Query($this->args);
+		}
+
+		/*
+		 * Execute the revelanssi query function if relavanssi is active.
+		 */
+		if (isset($this->args['s']) && function_exists('relevanssi_do_query')) {
+			relevanssi_do_query($this->query);
 		}
 
 		return $this;
