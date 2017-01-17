@@ -182,15 +182,16 @@ abstract class BasePostModel
 	 * @see https://developer.wordpress.org/reference/classes/wp_query/#author-parameters
 	 *
 	 * @param null $author
+	 * @param bool $exclude
 	 * @return $this
 	 */
-	public function by($author = null, $notIn = false)
+	public function by($author = null, $exclude = false)
 	{
 		if ($author == null) {
 			$this->args['author'] = get_current_user_id();
-		} elseif (is_array($author) && $notIn === false) {
+		} elseif (is_array($author) && $exclude === false) {
 			$this->args['author__in'] = $author;
-		} elseif (is_array($author) && $notIn === true) {
+		} elseif (is_array($author) && $exclude === true) {
 			$this->args['author__not_in'] = $author;
 		} elseif (is_int($author)) {
 			$this->args['author'] = $author;
@@ -725,9 +726,11 @@ abstract class BasePostModel
 
 			if ($post->post_excerpt == '') {
 				$post->post_excerpt = strip_shortcodes($post->post_content);
-				$post->post_excerpt = apply_filters('the_content', $post->post_content);
-				$post->post_excerpt = substr(strip_tags($post->post_content), 0, Config::get('theme.excerpt-length'));
+				$post->post_excerpt = apply_filters('the_content', $post->post_excerpt);
+				$post->post_excerpt = substr(strip_tags($post->post_excerpt), 0, Config::get('theme.excerpt-length'));
 			}
+
+			$post->post_excerpt = wpautop($post->post_excerpt); //Used because we always want <p> tags around the excerpt
 		}
 
 		return $this;
