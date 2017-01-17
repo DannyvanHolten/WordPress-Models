@@ -1,7 +1,7 @@
 {
-    "name": "dannyvanholten/themosis-models",
+    "name": "dannyvanholten/postmodel",
     "description": "Multiple Models (Posts & Taxonomies) for the Themosis Framework",
-    "type": "themosis-model",
+    "type": "wordpress-model",
     "license": "GPL-3.0+",
     "authors": [
         {
@@ -10,5 +10,8 @@
             "homepage": "http://www.dannyvanholten.com/"
         }
     ],
-    "require": {}
+    "require": {
+        "php": ">=5.6.4",
+        "composer/installers": "^1.0",
+    }
 }
