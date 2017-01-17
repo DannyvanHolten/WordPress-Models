@@ -237,6 +237,25 @@ abstract class BasePostModel
 	}
 
 	/**
+	 * Get only certain fields instead of entire Post objects
+	 *
+	 * @see https://codex.wordpress.org/Class_Reference/WP_Query#Return_Fields_Parameter
+	 *
+	 * @example ExampleModel::fields('ids')->get();
+	 *
+	 * @param null|int $fields
+	 * @return $this
+	 */
+	protected function fields($fields = null)
+	{
+		if ($fields !== null) {
+			$this->args['fields'] = $fields;
+		}
+
+		return $this;
+	}
+
+	/**
 	 * Get the posts matching the ID's
 	 * accepts an integer or an array
 	 *
@@ -250,6 +269,7 @@ abstract class BasePostModel
 	 * @param null|int|array $id
 	 * @param bool $exclude
 	 * @return $this
+	 * @throws \Exception
 	 */
 	protected function id($id = null, $exclude = false)
 	{
@@ -270,58 +290,6 @@ abstract class BasePostModel
 			}
 		} else {
 			$this->args['p'] = $id;
-		}
-
-		return $this;
-	}
-
-	/**
-	 * Exclude certain posts
-	 * Note: You can enter either an integer or an array.
-	 *
-	 * @see https://developer.wordpress.org/reference/classes/wp_query/#post-page-parameters
-	 *
-	 * @example ExampleModel:::all()->exclude(10)->get();
-	 * @example ExampleModel::archive()->exclude([10,20,30])->paginate();
-	 *
-	 * @param string|array $exclude
-	 * @return $this
-	 */
-	protected function whereIn(
-		$include = null
-	) {
-		if ($include !== null) {
-			if (!is_array($include)) {
-				$include = [$include];
-			}
-
-			$this->args['post__in'] = $include;
-		}
-
-		return $this;
-	}
-
-	/**
-	 * Exclude certain posts
-	 * Note: You can enter either an integer or an array.
-	 *
-	 * @see https://developer.wordpress.org/reference/classes/wp_query/#post-page-parameters
-	 *
-	 * @example ExampleModel:::all()->exclude(10)->get();
-	 * @example ExampleModel::archive()->exclude([10,20,30])->paginate();
-	 *
-	 * @param null|int|array $exclude
-	 * @return $this
-	 */
-	protected function whereNotIn(
-		$exclude = null
-	) {
-		if ($exclude !== null) {
-			if (!is_array($exclude)) {
-				$exclude = [$exclude];
-			}
-
-			$this->args['post__not_in'] = $exclude;
 		}
 
 		return $this;
@@ -395,9 +363,8 @@ abstract class BasePostModel
 	 * @param null|int $skip
 	 * @return $this
 	 */
-	protected function skip(
-		$skip = 0
-	) {
+	protected function skip($skip = 0)
+	{
 		if ($skip !== 0) {
 			$this->args['offset'] = $skip;
 		}
@@ -417,9 +384,8 @@ abstract class BasePostModel
 	 * @param null|int $take
 	 * @return $this
 	 */
-	protected function take(
-		$take = null
-	) {
+	protected function take($take = null)
+	{
 		if ($take !== null) {
 			$this->args['posts_per_page'] = $take;
 		}
@@ -440,9 +406,8 @@ abstract class BasePostModel
 	 * @param null|string|array $postType
 	 * @return $this
 	 */
-	protected function type(
-		$postType = null
-	) {
+	protected function type($postType = null)
+	{
 		if ($postType !== null) {
 			$this->args['post_type'] = $postType;
 		}
@@ -699,7 +664,9 @@ abstract class BasePostModel
 	{
 		if (function_exists('get_fields')) {
 			foreach ($this->query->posts as $post) {
-				$post->fields = get_fields($post->ID);
+				if ($post instanceof WP_Post) {
+					$post->fields = get_fields($post->ID);
+				}
 			}
 		}
 
@@ -716,7 +683,9 @@ abstract class BasePostModel
 	private function appendContent()
 	{
 		foreach ($this->query->posts as $post) {
-			$post->post_content = apply_filters('the_content', $post->post_content);
+			if ($post instanceof WP_Post) {
+				$post->post_content = apply_filters('the_content', $post->post_content);
+			}
 		}
 
 		return $this;
@@ -735,38 +704,43 @@ abstract class BasePostModel
 	{
 		foreach ($this->query->posts as $post) {
 
-			if ($post->post_excerpt == '') {
-				$post->post_excerpt = strip_shortcodes($post->post_content);
-				$post->post_excerpt = apply_filters('the_content', $post->post_excerpt);
-				$post->post_excerpt = substr(strip_tags($post->post_excerpt), 0, Config::get('theme.excerpt-length') ?: 120 );
-			}
+			if ($post instanceof WP_Post) {
+				if ($post->post_excerpt === '') {
+					$post->post_excerpt = strip_shortcodes($post->post_content);
+					$post->post_excerpt = apply_filters('the_content', $post->post_excerpt);
+					$post->post_excerpt = substr(strip_tags($post->post_excerpt), 0,
+						Config::get('theme.excerpt-length') ?: 120);
+				}
 
-			$post->post_excerpt = wpautop($post->post_excerpt); //Used because we always want <p> tags around the excerpt
+				$post->post_excerpt = wpautop($post->post_excerpt); //Used because we always want <p> tags around the excerpt
+			}
 		}
 
 		return $this;
 	}
 
 	/**
-	 * Return the WP-Pagenavi navigation.
+	 * Return the WP-Pagenavi navigation / Default WordPress Paginate links.
 	 *
 	 * @see https://github.com/lesterchan/wp-pagenavi
+	 * @see https://developer.wordpress.org/reference/functions/paginate_links/
 	 *
 	 * @return $this
 	 */
 	private function appendPagination()
 	{
-		if (function_exists('wp_pagenavi')) {
-
+		if (!function_exists('wp_pagenavi')) {
 			$this->results['pagination'] = wp_pagenavi([
 				'query'         => $this->query,
 				'echo'          => false,
 				'wrapper_tag'   => 'nav',
 				'wrapper_class' => 'pagination'
 			]);
-
-			$this->results['posts'] = $this->query->posts;
+		} else {
+			$this->results['pagination'] = paginate_links();
 		}
+
+		$this->results['posts'] = $this->query->posts;
 
 		return $this;
 	}
@@ -781,7 +755,9 @@ abstract class BasePostModel
 	private function appendPermalink()
 	{
 		foreach ($this->query->posts as $post) {
-			$post->permalink = get_the_permalink($post->ID);
+			if ($post instanceof WP_Post) {
+				$post->permalink = get_the_permalink($post->ID);
+			}
 		}
 
 		return $this;
