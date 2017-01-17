@@ -1,6 +1,6 @@
 {
     "name": "dannyvanholten/postmodel",
-    "description": "Model to get s (Posts & Taxonomies) for the Themosis Framework",
+    "description": "Model to get Posts from the WordPress Database for the Themosis Framework",
     "type": "wordpress-muplugin",
     "license": "GPL-3.0+",
     "authors": [
