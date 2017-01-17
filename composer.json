@@ -11,9 +11,11 @@
         }
     ],
     "autoload": {
-        "files": [
-            "*Model.php"
-        ]
+        "psr-4": {
+            "App\\Models\\BasePostModel": "BasePostModel.php",
+            "App\\Models\\PostModel": "PostModel.php",
+            "App\\Models\\PageModel": "PageModel.php"
+        }
     },
     "require": {
         "php": ">=5.6.4",
