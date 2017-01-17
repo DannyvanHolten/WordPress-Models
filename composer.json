@@ -1,7 +1,7 @@
 {
     "name": "dannyvanholten/themosis-models",
     "description": "Multiple Models (Posts & Taxonomies) for the Themosis Framework",
-    "type": "wordpress-model",
+    "type": "wordpress-muplugin",
     "license": "GPL-3.0+",
     "authors": [
         {
