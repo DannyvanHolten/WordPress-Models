@@ -1,7 +1,7 @@
 {
     "name": "dannyvanholten/themosis-models",
     "description": "Multiple Models (Post &amp; Taxonomies) for the Themosis Framework",
-    "type": "package",
+    "type": "project",
     "license": "GPL v3.0",
     "authors": [
         {
@@ -9,6 +9,5 @@
             "email": "info@dannyvanholten.com"
         }
     ],
-    "minimum-stability": "stable",
     "require": {}
 }
