@@ -246,9 +246,9 @@ abstract class BasePostModel
 		if (is_array($id) && $exclude === false) {
 			$this->args['post__in'] = $id;
 		} elseif (is_array($id) && $exclude === true) {
-			$this->args['post__not_in'] = $exclude;
+			$this->args['post__not_in'] = $id;
 		} elseif ($exclude === true) {
-			$this->args['post__not_in'] = [$exclude];
+			$this->args['post__not_in'] = [$id];
 		} elseif ($id === null) {
 			global $post;
 
