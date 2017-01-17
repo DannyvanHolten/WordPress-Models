@@ -1,12 +1,13 @@
 {
-    "name": "dannyvanholten/themosis-models",
-    "description": "Multiple Models (Post &amp; Taxonomies) for the Themosis Framework",
+    "name": "themosis/models",
+    "description": "Multiple Models to retrieve data for the Themosis Framework",
     "type": "project",
-    "license": "GPL v3.0",
+    "license": "GPL-3.0+",
     "authors": [
         {
             "name": "Danny van Holten",
-            "email": "info@dannyvanholten.com"
+            "email": "info@dannyvanholten.com",
+            "homepage": "http://www.dannyvanholten.com/"
         }
     ],
     "require": {}
