@@ -12,7 +12,7 @@ use Config;
  * The BasePostModel is used for all functions that should be usable in all the other Models.
  * If you want to extend the BasePostModel do so by at least defining a Post Type in your extended class
  *
- * @see https://codex.wordpress.org/Class_Reference/WP_Query
+ * @see https://developer.wordpress.org/reference/classes/wp_query/
  *
  * Class BasePostModel
  * @package App\Models
@@ -137,9 +137,9 @@ abstract class BasePostModel
 	/**
 	 * Return all post that fit the search query.
 	 *
-	 * @see https://codex.wordpress.org/Class_Reference/WP_Query#Search_Parameter
+	 * @see https://developer.wordpress.org/reference/classes/wp_query/#search-parameters
+	 * @see https://developer.wordpress.org/reference/classes/wp_query/#order-orderby-parameters
 	 * @see https://www.relevanssi.com/user-manual/functions/#relevanssi_do_query
-	 * @see https://codex.wordpress.org/Class_Reference/WP_Query#Order_.26_Orderby_Parameters
 	 * @see BasePostModel::paginate();
 	 * @see Input::get();
 	 *
@@ -230,7 +230,7 @@ abstract class BasePostModel
 	 * Get the posts matching the ID's
 	 * accepts an integer or an array
 	 *
-	 * @see https://codex.wordpress.org/Class_Reference/WP_Query#Post_.26_Page_Parameters
+	 * @see https://developer.wordpress.org/reference/classes/wp_query/#post-page-parameters
 	 *
 	 * @example ExampleModel::id(1)->first();
 	 * @example ExampleModel::id([1,2,3], true)->get();
@@ -266,7 +266,7 @@ abstract class BasePostModel
 	 * Exclude certain posts
 	 * Note: You can enter either an integer or an array.
 	 *
-	 * @see https://codex.wordpress.org/Class_Reference/WP_Query#Post_.26_Page_Parameters
+	 * @see https://developer.wordpress.org/reference/classes/wp_query/#post-page-parameters
 	 *
 	 * @example ExampleModel:::all()->exclude(10)->get();
 	 * @example ExampleModel::archive()->exclude([10,20,30])->paginate();
@@ -293,7 +293,7 @@ abstract class BasePostModel
 	 * Exclude certain posts
 	 * Note: You can enter either an integer or an array.
 	 *
-	 * @see https://codex.wordpress.org/Class_Reference/WP_Query#Post_.26_Page_Parameters
+	 * @see https://developer.wordpress.org/reference/classes/wp_query/#post-page-parameters
 	 *
 	 * @example ExampleModel:::all()->exclude(10)->get();
 	 * @example ExampleModel::archive()->exclude([10,20,30])->paginate();
@@ -320,7 +320,7 @@ abstract class BasePostModel
 	 * Order the results within the Query
 	 * The first value is the order by value, the second is either ascending or descending
 	 *
-	 * @see https://codex.wordpress.org/Class_Reference/WP_Query#Order_.26_Orderby_Parameters
+	 * @see https://developer.wordpress.org/reference/classes/wp_query/#order-orderby-parameters
 	 *
 	 * @example ExampleModel::orderBy('date','ASC')->paginate();
 	 * @example ExampleModel::take(3)->orderBy('online','ASC', 'status')->get();
@@ -354,7 +354,7 @@ abstract class BasePostModel
 	 * Get the current page for paginated pages.
 	 * Will be used when you call ->paginate();
 	 *
-	 * @see https://codex.wordpress.org/Class_Reference/WP_Query#Pagination_Parameters
+	 * @see https://developer.wordpress.org/reference/classes/wp_query/#pagination-parameters
 	 * @see BasePostModel::paginate()
 	 *
 	 * @example ExampleModel::take(10)->paginate();
@@ -378,7 +378,7 @@ abstract class BasePostModel
 	/**
 	 * Skip the number of posts defined by skip
 	 *
-	 * @see https://codex.wordpress.org/Class_Reference/WP_Query#Pagination_Parameters
+	 * @see https://developer.wordpress.org/reference/classes/wp_query/#pagination-parameters
 	 *
 	 * @example ExampleModel::skip(3)->get();
 	 *
@@ -401,7 +401,7 @@ abstract class BasePostModel
 	 * Use -1 for everything.
 	 * Leave empty for the default post per page setting defined in the WP Admin
 	 *
-	 * @see https://codex.wordpress.org/Class_Reference/WP_Query#Pagination_Parameters
+	 * @see https://developer.wordpress.org/reference/classes/wp_query/#pagination-parameters
 	 *
 	 * @example ExampleModel::take(3)->get();
 	 *
@@ -424,7 +424,7 @@ abstract class BasePostModel
 	 * Note: DO NOT use this function as is. Create a new Model and extend the BasePostModel. For example NewsModel.
 	 * And define it in the constructor.
 	 *
-	 * @see https://codex.wordpress.org/Class_Reference/WP_Query#Type_Parameters
+	 * @see https://developer.wordpress.org/reference/classes/wp_query/#post-type-parameters
 	 *
 	 * @example PostModel::type([EXAMPLE_POST_TYPE, NEWS_POST_TYPE])->get();
 	 * @example ExampleModel::all();
@@ -446,7 +446,7 @@ abstract class BasePostModel
 	/**
 	 * Get pages with by a certain meta query.
 	 *
-	 * @see https://codex.wordpress.org/Class_Reference/WP_Query#Custom_Field_Parameters
+	 * @see https://developer.wordpress.org/reference/classes/wp_query/#custom-field-post-meta-parameters
 	 *
 	 * @example ExampleModel::where('active', 1)->where('spotlight', 'front')->get();
 	 * @example ExampleModel::where('spotlight', 'footer', 'IN', 'OR')->where('spotlight', 'front')->get();
@@ -547,7 +547,7 @@ abstract class BasePostModel
 	/**
 	 * Get pages with by a certain meta query.
 	 *
-	 * @see https://codex.wordpress.org/Class_Reference/WP_Query#Taxonomy_Parameters
+	 * @see https://developer.wordpress.org/reference/classes/wp_query/#taxonomy-parameters
 	 *
 	 * @example ExampleModel::whereTax(EXAMPLE_TAXONOMY, 1)->get();
 	 * @example ExampleModel::whereTax(EXAMPLE_TAXONOMY, 1, 'term_id', IN', 'OR')->whereTax('spotlight', 'front')->get();
@@ -671,7 +671,7 @@ abstract class BasePostModel
 	/**
 	 * Count the results of our Query
 	 *
-	 * @see https://codex.wordpress.org/Class_Reference/WP_Query#Properties
+	 * @see https://developer.wordpress.org/reference/classes/wp_query/#properties
 	 * @see BasePostModel::runQuery();
 	 *
 	 * @example ExampleModel::where('active', 1)->count();
@@ -691,7 +691,7 @@ abstract class BasePostModel
 	/**
 	 * Create a new query
 	 *
-	 * @see https://codex.wordpress.org/Class_Reference/WP_Query
+	 * @see https://developer.wordpress.org/reference/classes/wp_query/
 	 * @see https://www.relevanssi.com/user-manual/functions/#relevanssi_do_query
 	 * @see WP_QUERY
 	 *

@@ -183,7 +183,7 @@ abstract class BaseTaxonomyModel
 	 * Get terms by post
 	 * Note: You can enter either an integer, string or an array.
 	 *
-	 * @see https://codex.wordpress.org/Function_Reference/wp_get_post_terms
+	 * @see https://developer.wordpress.org/reference/functions/wp_get_post_terms/
 	 *
 	 * @example ExampleTaxonomyModel::wherePost()->get();
 	 * @example ExampleTaxonomyModel::wherePost(10)->get();
