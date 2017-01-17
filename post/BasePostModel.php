@@ -274,8 +274,7 @@ abstract class BasePostModel
 	 * @param string|array $exclude
 	 * @return $this
 	 */
-	protected
-	function whereIn(
+	protected function whereIn(
 		$include = null
 	) {
 		if ($include !== null) {
@@ -301,8 +300,7 @@ abstract class BasePostModel
 	 * @param null|int|array $exclude
 	 * @return $this
 	 */
-	protected
-	function whereNotIn(
+	protected function whereNotIn(
 		$exclude = null
 	) {
 		if ($exclude !== null) {
@@ -330,8 +328,7 @@ abstract class BasePostModel
 	 * @param null|string $meta_key
 	 * @return $this
 	 */
-	protected
-	function orderBy(
+	protected function orderBy(
 		$orderBy,
 		$order = null,
 		$meta_key = null
@@ -362,8 +359,7 @@ abstract class BasePostModel
 	 * @param null|int $paged
 	 * @return $this
 	 */
-	protected
-	function paged(
+	protected function paged(
 		$paged = null
 	) {
 		if ($paged == null) {
@@ -385,8 +381,7 @@ abstract class BasePostModel
 	 * @param null|int $skip
 	 * @return $this
 	 */
-	protected
-	function skip(
+	protected function skip(
 		$skip = 0
 	) {
 		if ($skip != 0) {
@@ -408,8 +403,7 @@ abstract class BasePostModel
 	 * @param null|int $take
 	 * @return $this
 	 */
-	protected
-	function take(
+	protected function take(
 		$take = null
 	) {
 		if ($take !== null) {
@@ -432,8 +426,7 @@ abstract class BasePostModel
 	 * @param null|string|array $postType
 	 * @return $this
 	 */
-	protected
-	function type(
+	protected function type(
 		$postType = null
 	) {
 		if ($postType !== null) {
@@ -457,8 +450,7 @@ abstract class BasePostModel
 	 * @param string $meta_relation
 	 * @return $this
 	 */
-	protected
-	function where(
+	protected function where(
 		$meta_key,
 		$meta_value,
 		$meta_compare = '=',
@@ -506,8 +498,7 @@ abstract class BasePostModel
 	 * @param string $meta_relation
 	 * @return $this
 	 */
-	protected
-	function whereDate(
+	protected function whereDate(
 		$date_value,
 		$date_compare = null,
 		$date_inclusive = false,
@@ -557,8 +548,7 @@ abstract class BasePostModel
 	 * @param string $tax_compare
 	 * @return $this
 	 */
-	protected
-	function whereTax(
+	protected function whereTax(
 		$tax_key,
 		$tax_terms,
 		$tax_compare = '=',
@@ -603,8 +593,7 @@ abstract class BasePostModel
 	 *
 	 * @return array
 	 */
-	public
-	function get()
+	public function get()
 	{
 		$this->runQuery()
 			->appendAcfFields()
@@ -631,8 +620,7 @@ abstract class BasePostModel
 	 *
 	 * @return mixed
 	 */
-	public
-	function paginate()
+	public function paginate()
 	{
 		$this->paged()
 			->runQuery()
@@ -655,8 +643,7 @@ abstract class BasePostModel
 	 *
 	 * @return \WP_Post
 	 */
-	public
-	function first()
+	public function first()
 	{
 		$this->take(1)
 			->get();
@@ -678,8 +665,7 @@ abstract class BasePostModel
 	 *
 	 * @return array
 	 */
-	public
-	function count()
+	public function count()
 	{
 		if (!isset($this->query->found_posts)) {
 			$this->runQuery();
@@ -697,8 +683,7 @@ abstract class BasePostModel
 	 *
 	 * @return $this
 	 */
-	private
-	function runQuery()
+	private function runQuery()
 	{
 		if (!isset($this->query->posts)) {
 			$this->query = new WP_Query($this->args);
@@ -721,8 +706,7 @@ abstract class BasePostModel
 	 *
 	 * @return $this
 	 */
-	private
-	function appendAcfFields()
+	private function appendAcfFields()
 	{
 		if (function_exists('get_fields')) {
 			foreach ($this->query->posts as $post) {
@@ -740,8 +724,7 @@ abstract class BasePostModel
 	 *
 	 * @return $this
 	 */
-	private
-	function appendContent()
+	private function appendContent()
 	{
 		foreach ($this->query->posts as $post) {
 			$post->post_content = apply_filters('the_content', $post->post_content);
@@ -757,8 +740,7 @@ abstract class BasePostModel
 	 *
 	 * @return $this
 	 */
-	private
-	function appendExcerpt()
+	private function appendExcerpt()
 	{
 		foreach ($this->query->posts as $post) {
 
@@ -781,8 +763,7 @@ abstract class BasePostModel
 	 *
 	 * @return $this
 	 */
-	private
-	function appendPagination()
+	private function appendPagination()
 	{
 		if (function_exists('wp_pagenavi')) {
 
@@ -806,8 +787,7 @@ abstract class BasePostModel
 	 *
 	 * @return $this
 	 */
-	private
-	function appendPermalink()
+	private function appendPermalink()
 	{
 		foreach ($this->query->posts as $post) {
 			$post->permalink = get_the_permalink($post->ID);
