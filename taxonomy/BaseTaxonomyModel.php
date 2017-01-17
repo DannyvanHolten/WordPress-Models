@@ -352,6 +352,9 @@ abstract class BaseTaxonomyModel
 	/**
 	 * Parse our query and execute all the functions to make our content super fancy
 	 *
+	 * @see https://developer.wordpress.org/reference/functions/wp_get_post_terms/
+	 * @see https://developer.wordpress.org/reference/functions/get_terms/
+	 *
 	 * @see BasePostModel::runquery();
 	 * @see BasePostModel::appendAcfFields();
 	 * @see BasePostModel::appendContent();
@@ -437,7 +440,7 @@ abstract class BaseTaxonomyModel
 	/**
 	 * Add the permalink to our query result
 	 *
-	 * @see https://developer.wordpress.org/reference/functions/get_the_permalink/
+	 * @see https://developer.wordpress.org/reference/functions/get_term_link/
 	 *
 	 * @return mixed
 	 */
