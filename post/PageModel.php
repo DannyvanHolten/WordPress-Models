@@ -35,7 +35,7 @@ final class PageModel extends BasePostModel
 	{
 		$instance = new static;
 
-		$instance->meta('_wp_page_template', $template);
+		$instance->where('_wp_page_template', $template);
 
 		return $instance->first();
 	}
