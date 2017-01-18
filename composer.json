@@ -1,5 +1,5 @@
 {
-  "name": "wp/models",
+  "name": "wordpress-plugin/models",
   "description": "Model to get Posts from the WordPress Database for the Themosis Framework",
   "type": "wordpress-muplugin",
   "license": "GPL-3.0+",
