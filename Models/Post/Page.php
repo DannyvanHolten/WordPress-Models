@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Post;
 
 /**
  * This is the model if you want to get posts of the page post type.
@@ -8,7 +8,7 @@ namespace App\Models;
  * Class PageModel
  * @package App\Models
  */
-class PageModel extends BasePostModel
+class Page extends Post
 {
 
 	/**

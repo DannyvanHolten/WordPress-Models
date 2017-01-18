@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Post;
 
 use WP_Query;
 use WP_Post;
@@ -18,7 +18,7 @@ use Config;
  * Class BasePostModel
  * @package App\Models
  */
-abstract class BasePostModel
+abstract class Post
 {
 
 	/**

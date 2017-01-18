@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Post;
 
 /**
  * This is the model if you want to get posts of the default post type.
@@ -8,7 +8,7 @@ namespace App\Models;
  * Class PostModel
  * @package App\Models
  */
-class PostModel extends BasePostModel
+class DefaultPost extends Post
 {
 	/**
 	 * PostModel constructor.
