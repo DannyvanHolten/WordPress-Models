@@ -358,7 +358,7 @@ class User
 			if ($queriedObject instanceof WP_Post) {
 				$postID = $queriedObject->ID;
 			} else {
-				throw new \Exception('User::wherePost is null and cannot verify the queried object is a WP_Post object');
+				throw new \Exception('User::published is null and cannot verify the queried object is a WP_Post object');
 			}
 		}
 
