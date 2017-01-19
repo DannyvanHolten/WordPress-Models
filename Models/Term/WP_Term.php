@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Term;
+namespace Models\Term;
 
 /**
  * The Term is used to implement the core functions of get_terms

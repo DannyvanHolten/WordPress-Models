@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Post;
+namespace Models\Post;
 
 /**
  * This is the model if you want to get posts of the page post type.

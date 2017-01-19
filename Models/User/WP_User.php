@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\User;
+namespace Models\User;
 
-use App\Models\Post\Post;
+use Models\Post\Post;
 
 /**
  * The User is used to implement the core functions of get_users
@@ -15,7 +15,7 @@ use App\Models\Post\Post;
  * Class User
  * @package App\Models\User
  */
-class WP_User
+abstract class WP_User
 {
 	/**
 	 * An array of arguments to get the terms

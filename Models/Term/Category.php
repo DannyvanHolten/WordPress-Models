@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Term;
+namespace Models\Term;
 
 /**
  * This is the model if you want to get the terms of the Category Taxonomy
