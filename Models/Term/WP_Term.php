@@ -2,9 +2,6 @@
 
 namespace App\Models\Term;
 
-use WP_Term;
-use WP_Post;
-
 /**
  * The Term is used to implement the core functions of get_terms
  *
@@ -16,7 +13,7 @@ use WP_Post;
  * Class Term
  * @package App\Models|Term
  */
-class Term
+abstract class WP_Term
 {
 	/**
 	 * An array of arguments to get the terms
@@ -173,7 +170,7 @@ class Term
 		if ($id === null) {
 			$queriedObject = get_queried_object();
 
-			if ($queriedObject instanceof WP_Term) {
+			if ($queriedObject instanceof \WP_Term) {
 				$id = $queriedObject->term_id;
 			} else {
 				throw new \Exception('Term::id is null and cannot verify the queried object is a WP_Term object');
@@ -351,7 +348,7 @@ class Term
 		if ($postID === null) {
 			$queriedObject = get_queried_object();
 
-			if ($queriedObject instanceof WP_Post) {
+			if ($queriedObject instanceof \WP_Post) {
 				$postID = $queriedObject->ID;
 			} else {
 				throw new \Exception('Term::wherePost is null and cannot verify the queried object is a WP_Post object');
@@ -445,7 +442,7 @@ class Term
 	{
 		if (function_exists('get_fields')) {
 			foreach ($this->terms as $term) {
-				if ($term instanceof WP_Term) {
+				if ($term instanceof \WP_Term) {
 					$term->fields = get_fields($term->taxonomy . '_' . $term->term_id);
 				}
 			}
@@ -464,7 +461,7 @@ class Term
 	private function appendDescription()
 	{
 		foreach ($this->terms as $term) {
-			if ($term instanceof WP_Term) {
+			if ($term instanceof \WP_Term) {
 				$term->description = wpautop($term->description);
 			}
 		}
@@ -482,7 +479,7 @@ class Term
 	private function appendPermalink()
 	{
 		foreach ($this->terms as $term) {
-			if ($term instanceof WP_Term) {
+			if ($term instanceof \WP_Term) {
 				$term->permalink = get_term_link($term->term_id);
 			}
 		}

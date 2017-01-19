@@ -8,7 +8,7 @@ namespace App\Models\Post;
  * Class DefaultPost
  * @package App\Models|Post
  */
-class DefaultPost extends Post
+class DefaultPost extends WP_Post
 {
 	/**
 	 * PostModel constructor.

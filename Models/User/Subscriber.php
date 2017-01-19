@@ -8,7 +8,7 @@ namespace App\Models\User;
  * Class Subscriber
  * @package App\Models|User
  */
-class Subscribe extends User
+class Subscriber extends User
 {
 
 	/**

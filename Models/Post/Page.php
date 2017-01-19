@@ -8,7 +8,7 @@ namespace App\Models\Post;
  * Class Page
  * @package App\Models|Post
  */
-class Page extends Post
+class Page extends WP_Post
 {
 
 	/**
