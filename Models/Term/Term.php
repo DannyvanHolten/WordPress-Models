@@ -30,14 +30,7 @@ class Term
 	 *
 	 * @var array
 	 */
-	protected $terms = null;
-
-	/**
-	 * The Post
-	 *
-	 * @var array
-	 */
-	protected $post = null;
+	protected $users = null;
 
 	/**
 	 * Send trough all our functions to real functions, so we don't need to make a new instance for everything

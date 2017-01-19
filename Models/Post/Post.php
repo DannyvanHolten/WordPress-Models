@@ -187,7 +187,7 @@ class Post
 	 * @param bool $exclude
 	 * @return $this
 	 */
-	public function by($author = null, $exclude = false)
+	protected function by($author = null, $exclude = false)
 	{
 		if ($author == null) {
 			$this->args['author'] = get_current_user_id();

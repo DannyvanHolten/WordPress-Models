@@ -152,7 +152,7 @@ class User
 	 * @param bool $exclude
 	 * @return $this
 	 */
-	public function id($id = null, $exclude = false)
+	protected function id($id = null, $exclude = false)
 	{
 		if ($id == null) {
 			$this->args['include'] = [get_current_user_id()];
@@ -258,7 +258,7 @@ class User
 	 * @param bool $exclude
 	 * @return $this
 	 */
-	public function type($role = null, $exclude = false, $strict = false)
+	protected function type($role = null, $exclude = false, $strict = false)
 	{
 		if (!is_array($role)) {
 			$role = [$role];
@@ -367,36 +367,32 @@ class User
 		return $this;
 	}
 
-//	/**
-//	 * Parse our query and execute all the functions to make our content super fancy
-//	 *
-//	 * @see https://developer.wordpress.org/reference/functions/wp_get_post_terms/
-//	 * @see https://developer.wordpress.org/reference/functions/get_terms/
-//	 *
-//	 * @see BasePostModel::runquery();
-//	 * @see BasePostModel::appendAcfFields();
-//	 * @see BasePostModel::appendContent();
-//	 * @see BasePostModel::appendExcerpt();
-//	 * @see BasePostModel::appendPermalink();
-//	 *
-//	 * @example ExampleUser::take(10)->get();
-//	 *
-//	 * @return array|int|\WP_Error
-//	 */
-//	public function get()
-//	{
-//		if ($this->post !== null) {
-//			$this->terms = wp_get_post_terms($this->post, $this->args['taxonomy'], $this->args);
-//		} else {
-//			$this->terms = get_terms($this->args);
-//		}
+	/**
+	 * Parse our query and execute all the functions to make our content super fancy
+	 *
+	 * @see https://developer.wordpress.org/reference/functions/wp_get_post_terms/
+	 * @see https://developer.wordpress.org/reference/functions/get_terms/
+	 *
+	 * @see BasePostModel::runquery();
+	 * @see BasePostModel::appendAcfFields();
+	 * @see BasePostModel::appendContent();
+	 * @see BasePostModel::appendExcerpt();
+	 * @see BasePostModel::appendPermalink();
+	 *
+	 * @example ExampleUser::take(10)->get();
+	 *
+	 * @return array|int|\WP_Error
+	 */
+	public function get()
+	{
+		$this->users = get_users($this->args);
 //
 //		$this->appendAcfFields()
 //			->appendDescription()
 //			->appendPermalink();
-//
-//		return $this->terms;
-//	}
+
+		return $this->users;
+	}
 //
 //	/**
 //	 * Get the first result of our Query
