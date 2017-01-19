@@ -3,16 +3,17 @@
 namespace Models\User;
 
 use Models\Post\Post;
+use Models\Post\WP_Post;
 
 /**
- * The User is used to implement the core functions of get_users
+ * The WP_User is used to implement the core functions of get_users
  *
- * The User is used for all functions that should be usable in all the other Taxonomy Models.
- * If you want to extend the User do so by at least defining a taxonomy in your extended class
+ * The WP_User is used for all functions that should be usable in all the other User Models.
+ * If you want to extend the WP_User do so by at least extending the WP_User class
  *
- * @see https://developer.wordpress.org/reference/functions/get_terms/
+ * @see https://developer.wordpress.org/reference/functions/get_users/
  *
- * Class User
+ * Class WP_User
  * @package App\Models\User
  */
 abstract class WP_User
@@ -25,18 +26,11 @@ abstract class WP_User
 	protected $args = [];
 
 	/**
-	 * The Terms
+	 * The users
 	 *
 	 * @var array
 	 */
-	protected $terms = null;
-
-	/**
-	 * The Post
-	 *
-	 * @var array
-	 */
-	protected $post = null;
+	protected $users = null;
 
 	/**
 	 * Send trough all our functions to real functions, so we don't need to make a new instance for everything
@@ -67,12 +61,11 @@ abstract class WP_User
 		call_user_func_array([$instance, $name], $arguments);
 
 		return $instance;
-
 	}
 
 	/**
-	 * Return all terms.
-	 * Note: Default limits to 0 (ALL). If you need less, adjust the limit.
+	 * Return all users.
+	 * Note: Default limits to -1 (ALL). If you need less, adjust the limit.
 	 *
 	 * @see User::take()
 	 * @see User::hideEmpty()
@@ -93,7 +86,7 @@ abstract class WP_User
 	}
 
 	/**
-	 * Return the posts respecting the the default post per page setting in WordPress.
+	 * Return the users respecting the the default post per page setting in WordPress.
 	 *
 	 * @see User::take()
 	 * @see User::paginate()
@@ -113,10 +106,9 @@ abstract class WP_User
 	}
 
 	/**
-	 * Find a single term by ID | Slug.
+	 * Find a single user by ID | Login.
 	 *
-	 * @see User::whereIn();
-	 * @see User::hideEmpty()
+	 * @see User::id()
 	 * @see User::get()
 	 * @see User::first()
 	 *
@@ -140,15 +132,14 @@ abstract class WP_User
 	}
 
 	/**
-	 * Return Posts where they are by a certain author
+	 * Return users where they have a certain ID / Login
 	 *
-	 * @see https://developer.wordpress.org/reference/classes/wp_query/#author-parameters
-	 * @see https://developer.wordpress.org/reference/functions/get_current_user_id/
+	 * @see https://developer.wordpress.org/reference/classes/wp_user_query/prepare_query/#parameters
 	 *
 	 * @example ExampleUser::by('me')->get()
 	 * @example ExampleUser::by(1)->first()
 	 *
-	 * @param null $author
+	 * @param null|int|string|array $id
 	 * @param bool $exclude
 	 * @return $this
 	 */
@@ -178,9 +169,9 @@ abstract class WP_User
 	}
 
 	/**
-	 * Get only certain fields instead of entire Post objects
+	 * Get only certain fields instead of entire WP_User objects
 	 *
-	 * @see https://codex.wordpress.org/Class_Reference/WP_Query#Return_Fields_Parameter
+	 * @see https://developer.wordpress.org/reference/classes/wp_user_query/prepare_query/#parameters
 	 *
 	 * @example ExampleUser::fields('ids')->get();
 	 *
@@ -200,7 +191,7 @@ abstract class WP_User
 	 * Order the results within the Query
 	 * The first value is the order by value, the second is either ascending or descending
 	 *
-	 * @see https://developer.wordpress.org/reference/functions/get_terms/#parameters
+	 * @see https://developer.wordpress.org/reference/classes/wp_user_query/prepare_query/#parameters
 	 *
 	 * @example ExampleUser::orderBy('date','ASC')->get();
 	 * @example ExampleUser::take(3)->orderBy('online','ASC', 'status')->get();
@@ -212,7 +203,6 @@ abstract class WP_User
 	 */
 	protected function orderBy($orderBy, $order = null, $meta_key = null)
 	{
-
 		$this->args['orderby'] = $orderBy;
 
 		if ($order !== null) {
@@ -227,9 +217,9 @@ abstract class WP_User
 	}
 
 	/**
-	 * Skip the number of posts defined by skip
+	 * Skip the number of users defined by skip
 	 *
-	 * @see https://developer.wordpress.org/reference/functions/get_terms/#parameters
+	 * @see https://developer.wordpress.org/reference/classes/wp_user_query/prepare_query/#parameters
 	 *
 	 * @example ExampleUser::skip(3)->get();
 	 *
@@ -246,16 +236,16 @@ abstract class WP_User
 	}
 
 	/**
-	 * Return Posts where they are by a certain author
+	 * Return Users where they have a certain role
 	 *
-	 * @see https://developer.wordpress.org/reference/classes/wp_query/#author-parameters
-	 * @see https://developer.wordpress.org/reference/functions/get_current_user_id/
+	 * @see https://developer.wordpress.org/reference/functions/get_terms/#parameters
 	 *
 	 * @example ExampleUser::by('me')->get()
 	 * @example ExampleUser::by(1)->first()
 	 *
-	 * @param null $author
+	 * @param null $role
 	 * @param bool $exclude
+	 * @param bool $strict
 	 * @return $this
 	 */
 	protected function type($role = null, $exclude = false, $strict = false)
@@ -278,10 +268,10 @@ abstract class WP_User
 	}
 
 	/**
-	 * Limit the terms
-	 * Use 0 for everything.
+	 * Limit the users
+	 * Use -1 for everything.
 	 *
-	 * @see https://developer.wordpress.org/reference/functions/get_terms/#parameters
+	 * @see https://developer.wordpress.org/reference/classes/wp_user_query/prepare_query/#parameters
 	 *
 	 * @example ExampleUser::take(3)->get();
 	 *
@@ -298,9 +288,9 @@ abstract class WP_User
 	}
 
 	/**
-	 * Get terms by a certain meta query.
+	 * Get users by a certain meta query.
 	 *
-	 * @see https://developer.wordpress.org/reference/functions/get_terms/#parameters
+	 * @see https://developer.wordpress.org/reference/classes/wp_user_query/prepare_query/#parameters
 	 *
 	 * @example ExampleUser::where('active', 1)->where('spotlight', 'front')->get();
 	 * @example ExampleUser::where('spotlight', 'footer', 'IN', 'OR')->where('spotlight', 'front')->get();
@@ -337,14 +327,12 @@ abstract class WP_User
 	}
 
 	/**
-	 * Get terms by post
-	 * Note: You can enter either an integer, string or an array.
+	 * Get users that published a certain post c.q. the post author.
 	 *
-	 * @see https://developer.wordpress.org/reference/functions/wp_get_post_terms/
-	 * @see https://developer.wordpress.org/reference/functions/get_queried_object/
+	 * @see WP_Post::find();
 	 *
-	 * @example ExampleUser::wherePost()->get();
-	 * @example ExampleUser::wherePost(10)->get();
+	 * @example ExampleUser::published()->get();
+	 * @example ExampleUser::published(100)->get();
 	 *
 	 * @param null|int $postID
 	 * @return $this
@@ -355,7 +343,7 @@ abstract class WP_User
 		if ($postID === null) {
 			$queriedObject = get_queried_object();
 
-			if ($queriedObject instanceof WP_Post) {
+			if ($queriedObject instanceof \WP_Post) {
 				$postID = $queriedObject->ID;
 			} else {
 				throw new \Exception('User::published is null and cannot verify the queried object is a WP_Post object');
@@ -367,29 +355,11 @@ abstract class WP_User
 		return $this;
 	}
 
-	/**
-	 * Parse our query and execute all the functions to make our content super fancy
-	 *
-	 * @see https://developer.wordpress.org/reference/functions/wp_get_post_terms/
-	 * @see https://developer.wordpress.org/reference/functions/get_terms/
-	 *
-	 * @see BasePostModel::runquery();
-	 * @see BasePostModel::appendAcfFields();
-	 * @see BasePostModel::appendContent();
-	 * @see BasePostModel::appendExcerpt();
-	 * @see BasePostModel::appendPermalink();
-	 *
-	 * @example ExampleUser::take(10)->get();
-	 *
-	 * @return array|int|\WP_Error
-	 */
 	public function get()
 	{
-		$this->users = get_users($this->args);
-//
-//		$this->appendAcfFields()
-//			->appendDescription()
-//			->appendPermalink();
+		$this->runQuery()
+			->appendAcfFields()
+			->appendPermalink();
 
 		return $this->users;
 	}
@@ -415,81 +385,77 @@ abstract class WP_User
 
 		return false;
 	}
-//
-//	/**
-//	 * Count the results of our Query
-//	 *
-//	 * @see User::get();
-//	 *
-//	 * @example ExampleUser::where('active', 1)->count();
-//	 *
-//	 * @return mixed
-//	 *
-//	 * @todo: reform to users
-//	 */
-//	public function count()
-//	{
-//		if (!isset($this->terms)) {
-//			$this->get();
-//		}
-//
-//		return count($this->terms);
-//	}
-//
-//	/**
-//	 * Get all the ACF fields that are related to our posts
-//	 *
-//	 * @see https://www.advancedcustomfields.com/resources/get_fields/
-//	 *
-//	 * @return mixed
-//	 */
-//	private function appendAcfFields()
-//	{
-//		if (function_exists('get_fields')) {
-//			foreach ($this->terms as $term) {
-//				if ($term instanceof WP_Term) {
-//					$term->fields = get_fields($term->taxonomy . '_' . $term->term_id);
-//				}
-//			}
-//		}
-//
-//		return $this;
-//	}
-//
-//	/**
-//	 * Add P tags around our description.
-//	 *
-//	 * @see https://developer.wordpress.org/reference/functions/wpautop/
-//	 *
-//	 * @return mixed
-//	 */
-//	private function appendDescription()
-//	{
-//		foreach ($this->terms as $term) {
-//			if ($term instanceof WP_Term) {
-//				$term->description = wpautop($term->description);
-//			}
-//		}
-//
-//		return $this;
-//	}
-//
-//	/**
-//	 * Add the permalink to our query result
-//	 *
-//	 * @see https://developer.wordpress.org/reference/functions/get_term_link/
-//	 *
-//	 * @return mixed
-//	 */
-//	private function appendPermalink()
-//	{
-//		foreach ($this->terms as $term) {
-//			if ($term instanceof WP_Term) {
-//				$term->permalink = get_term_link($term->term_id);
-//			}
-//		}
-//
-//		return $this;
-//	}
+
+	/**
+	 * Count the results of our Query
+	 *
+	 * @see User::get();
+	 *
+	 * @example ExampleUser::where('active', 1)->count();
+	 *
+	 * @return mixed
+	 *
+	 */
+	public function count()
+	{
+		if (!isset($this->users)) {
+			$this->get();
+		}
+
+		return count($this->users);
+	}
+
+	/**
+	 * Get all the ACF fields that are related to our users
+	 *
+	 * @see https://www.advancedcustomfields.com/resources/get_fields/
+	 *
+	 * @return mixed
+	 */
+	private function appendAcfFields()
+	{
+		if (function_exists('get_fields')) {
+			foreach ($this->users as $user) {
+				if ($user instanceof \WP_User) {
+					$user->fields = get_fields('user_' . $user->ID);
+				}
+			}
+		}
+
+		return $this;
+	}
+
+
+	/**
+	 * Add the permalink to our query result
+	 *
+	 * @see https://developer.wordpress.org/reference/functions/get_author_posts_url/
+	 *
+	 * @return mixed
+	 */
+	private function appendPermalink()
+	{
+		foreach ($this->users as $user) {
+			if ($user instanceof \WP_User) {
+				$user->permalink = get_author_posts_url($user->ID);
+			}
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Create a new query
+	 *
+	 * @see https://developer.wordpress.org/reference/functions/get_users/
+	 *
+	 * @return $this
+	 */
+	private function runQuery()
+	{
+		$this->users = get_users($this->args);
+
+		return $this;
+	}
 
 }

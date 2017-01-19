@@ -10,7 +10,6 @@ namespace Models\Term;
  */
 class Category extends Term
 {
-
 	/**
 	 * Category constructor.
 	 *

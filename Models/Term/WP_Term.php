@@ -3,14 +3,14 @@
 namespace Models\Term;
 
 /**
- * The Term is used to implement the core functions of get_terms
+ * The WP_Term is used to implement the core functions of get_terms
  *
- * The Term is used for all functions that should be usable in all the other Taxonomy Models.
- * If you want to extend the Term do so by at least defining a taxonomy in your extended class
+ * The WP_Term is used for all functions that should be usable in all the other Term Models.
+ * If you want to extend the WP_Term do so by at least defining a taxonomy in your extended class
  *
  * @see https://developer.wordpress.org/reference/functions/get_terms/
  *
- * Class Term
+ * Class WP_Term
  * @package App\Models|Term
  */
 abstract class WP_Term
@@ -23,11 +23,18 @@ abstract class WP_Term
 	protected $args = [];
 
 	/**
-	 * The Terms
+	 * The terms
 	 *
 	 * @var array
 	 */
-	protected $users = null;
+	protected $terms = null;
+
+	/**
+	 * The post
+	 *
+	 * @var array
+	 */
+	protected $post = null;
 
 	/**
 	 * Send trough all our functions to real functions, so we don't need to make a new instance for everything
@@ -58,7 +65,6 @@ abstract class WP_Term
 		call_user_func_array([$instance, $name], $arguments);
 
 		return $instance;
-
 	}
 
 	/**
@@ -87,8 +93,7 @@ abstract class WP_Term
 	/**
 	 * Find a single term by ID | Slug.
 	 *
-	 * @see Term::whereIn();
-	 * @see Term::hideEmpty()
+	 * @see Term::id()
 	 * @see Term::get()
 	 * @see Term::first()
 	 *
@@ -113,9 +118,9 @@ abstract class WP_Term
 	}
 
 	/**
-	 * Get only certain fields instead of entire Post objects
+	 * Get only certain fields instead of entire Term objects
 	 *
-	 * @see https://codex.wordpress.org/Class_Reference/WP_Query#Return_Fields_Parameter
+	 * @see https://developer.wordpress.org/reference/functions/get_terms/#parameters
 	 *
 	 * @example ExampleTerm::fields('ids')->get();
 	 *
@@ -166,7 +171,6 @@ abstract class WP_Term
 	 */
 	protected function id($id = null, $exclude = false, $hideDescendants = false)
 	{
-
 		if ($id === null) {
 			$queriedObject = get_queried_object();
 
@@ -210,7 +214,6 @@ abstract class WP_Term
 	 */
 	protected function orderBy($orderBy, $order = null, $meta_key = null)
 	{
-
 		$this->args['orderby'] = $orderBy;
 
 		if ($order !== null) {
@@ -225,7 +228,7 @@ abstract class WP_Term
 	}
 
 	/**
-	 * Skip the number of posts defined by skip
+	 * Skip the number of terms defined by skip
 	 *
 	 * @see https://developer.wordpress.org/reference/functions/get_terms/#parameters
 	 *
@@ -363,9 +366,6 @@ abstract class WP_Term
 	/**
 	 * Parse our query and execute all the functions to make our content super fancy
 	 *
-	 * @see https://developer.wordpress.org/reference/functions/wp_get_post_terms/
-	 * @see https://developer.wordpress.org/reference/functions/get_terms/
-	 *
 	 * @see BasePostModel::runquery();
 	 * @see BasePostModel::appendAcfFields();
 	 * @see BasePostModel::appendContent();
@@ -378,13 +378,8 @@ abstract class WP_Term
 	 */
 	public function get()
 	{
-		if ($this->post !== null) {
-			$this->terms = wp_get_post_terms($this->post, $this->args['taxonomy'], $this->args);
-		} else {
-			$this->terms = get_terms($this->args);
-		}
-
-		$this->appendAcfFields()
+		$this->runQuery()
+			->appendAcfFields()
 			->appendDescription()
 			->appendPermalink();
 
@@ -432,7 +427,7 @@ abstract class WP_Term
 	}
 
 	/**
-	 * Get all the ACF fields that are related to our posts
+	 * Get all the ACF fields that are related to our terms
 	 *
 	 * @see https://www.advancedcustomfields.com/resources/get_fields/
 	 *
@@ -482,6 +477,25 @@ abstract class WP_Term
 			if ($term instanceof \WP_Term) {
 				$term->permalink = get_term_link($term->term_id);
 			}
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Create a new query
+	 *
+	 * @see https://developer.wordpress.org/reference/functions/wp_get_post_terms/
+	 * @see https://developer.wordpress.org/reference/functions/get_terms/
+	 *
+	 * @return $this
+	 */
+	private function runQuery()
+	{
+		if ($this->post !== null) {
+			$this->terms = wp_get_post_terms($this->post, $this->args['taxonomy'], $this->args);
+		} else {
+			$this->terms = get_terms($this->args);
 		}
 
 		return $this;

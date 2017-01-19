@@ -7,14 +7,14 @@ use Input;
 use Config;
 
 /**
- * The Post is used to implement the core functions of the WP_Query
+ * TheWP_ Post is used to implement the core functions of the WP_Query
  *
- * The Post is used for all functions that should be usable in all the other Models.
- * If you want to extend the Post do so by at least defining a Post Type in your extended class
+ * The WP_Post is used for all functions that should be usable in all the other Post Models.
+ * If you want to extend the WP_Post do so by at least defining a Post Type in your extended class
  *
  * @see https://developer.wordpress.org/reference/classes/wp_query/
  *
- * Class Post
+ * Class WP_Post
  * @package App\Models|Post
  */
 abstract class WP_Post
@@ -68,7 +68,6 @@ abstract class WP_Post
 		call_user_func_array([$instance, $name], $arguments);
 
 		return $instance;
-
 	}
 
 	/**
@@ -236,7 +235,7 @@ abstract class WP_Post
 	}
 
 	/**
-	 * Get only certain fields instead of entire Post objects
+	 * Get only certain fields instead of entire WP_Post objects
 	 *
 	 * @see https://codex.wordpress.org/Class_Reference/WP_Query#Return_Fields_Parameter
 	 *
@@ -272,7 +271,6 @@ abstract class WP_Post
 	 */
 	protected function id($id = null, $exclude = false)
 	{
-
 		if (is_array($id) && $exclude === false) {
 			$this->args['post__in'] = $id;
 		} elseif (is_array($id) && $exclude === true) {
@@ -313,7 +311,6 @@ abstract class WP_Post
 		$order = null,
 		$meta_key = null
 	) {
-
 		$this->args['orderby'] = $orderBy;
 
 		if ($order !== null) {

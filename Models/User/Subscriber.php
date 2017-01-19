@@ -3,14 +3,13 @@
 namespace Models\User;
 
 /**
- * This is the model if you want to get the terms of the Category Taxonomy
+ * This is the model if you want to get the users of the rol subscriber
  *
  * Class Subscriber
  * @package App\Models|User
  */
 class Subscriber extends User
 {
-
 	/**
 	 * Subscriber constructor.
 	 *

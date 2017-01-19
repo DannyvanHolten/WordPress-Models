@@ -3,9 +3,9 @@
 namespace Models\Post;
 
 /**
- * This is the model if you want to get posts of the default post type.
+ * This is the model if you want to get posts of all the post types.
  *
- * Class DefaultPost
+ * Class Post
  * @package App\Models|Post
  */
 class Post extends WP_Post

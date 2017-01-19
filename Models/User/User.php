@@ -3,14 +3,13 @@
 namespace Models\User;
 
 /**
- * This is the model if you want to get the terms of the Category Taxonomy
+ * This is the model if you want to get all the users
  *
- * Class Subscriber
+ * Class User
  * @package App\Models|User
  */
 class User extends WP_User
 {
-
 	/**
 	 * Subscriber constructor.
 	 *

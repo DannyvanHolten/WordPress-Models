@@ -10,7 +10,6 @@ namespace Models\Post;
  */
 class Page extends WP_Post
 {
-
 	/**
 	 * PageModel constructor.
 	 *
