@@ -8,17 +8,17 @@ use Input;
 use Config;
 
 /**
- * The BasePostModel is used to implement the core functions of the WP_Query
+ * The Post is used to implement the core functions of the WP_Query
  *
- * The BasePostModel is used for all functions that should be usable in all the other Models.
- * If you want to extend the BasePostModel do so by at least defining a Post Type in your extended class
+ * The Post is used for all functions that should be usable in all the other Models.
+ * If you want to extend the Post do so by at least defining a Post Type in your extended class
  *
  * @see https://developer.wordpress.org/reference/classes/wp_query/
  *
- * Class BasePostModel
- * @package App\Models
+ * Class Post
+ * @package App\Models|Post
  */
-abstract class Post
+class Post
 {
 
 	/**
@@ -77,11 +77,11 @@ abstract class Post
 	 * Note: Default limits to -1 (ALL). If you need less, adjust the limit.
 	 * Note: DO NOT USE for archive pages. Use Archive instead.
 	 *
-	 * @see BasePostModel::take()
-	 * @see BasePostModel::get()
+	 * @see Post::take()
+	 * @see Post::get()
 	 *
-	 * @example ExampleModel::all();
-	 * @example ExampleModel::all(10);
+	 * @example ExamplePost::all();
+	 * @example ExamplePost::all(10);
 	 *
 	 * @param null|string|int $take
 	 * @return array
@@ -97,11 +97,11 @@ abstract class Post
 	/**
 	 * Return the posts respecting the the default post per page setting in WordPress.
 	 *
-	 * @see BasePostModel::take()
-	 * @see BasePostModel::paginate()
+	 * @see Post::take()
+	 * @see Post::paginate()
 	 *
-	 * @example ExampleModel::archive();
-	 * @example ExampleModel::archive(10);
+	 * @example ExamplePost::archive();
+	 * @example ExamplePost::archive(10);
 	 *
 	 * @param null|string|int $take
 	 * @return $instance
@@ -117,12 +117,12 @@ abstract class Post
 	/**
 	 * Find a single post by ID.
 	 *
-	 * @see BasePostModel::id()
-	 * @see BasePostModel::first()
-	 * @see BasePostModel::get()
+	 * @see Post::id()
+	 * @see Post::first()
+	 * @see Post::get()
 	 *
 	 * @example PageModel::find();
-	 * @example ExampleModel::find([1,2,3]);
+	 * @example ExamplePost::find([1,2,3]);
 	 *
 	 * @param null|int|array $id
 	 * @return \WP_Post
@@ -146,7 +146,7 @@ abstract class Post
 	 * @see https://developer.wordpress.org/reference/classes/wp_query/#search-parameters
 	 * @see https://developer.wordpress.org/reference/classes/wp_query/#order-orderby-parameters
 	 * @see https://www.relevanssi.com/user-manual/functions/#relevanssi_do_query
-	 * @see BasePostModel::paginate();
+	 * @see Post::paginate();
 	 * @see Input::get();
 	 *
 	 * @example PostModel::search();
@@ -180,8 +180,8 @@ abstract class Post
 	 * @see https://developer.wordpress.org/reference/classes/wp_query/#author-parameters
 	 * @see https://developer.wordpress.org/reference/functions/get_current_user_id/
 	 *
-	 * @example ExampleModel::by('me')->get()
-	 * @example ExampleModel::by(1)->first()
+	 * @example ExamplePost::by('me')->get()
+	 * @example ExamplePost::by(1)->first()
 	 *
 	 * @param null $author
 	 * @param bool $exclude
@@ -241,7 +241,7 @@ abstract class Post
 	 *
 	 * @see https://codex.wordpress.org/Class_Reference/WP_Query#Return_Fields_Parameter
 	 *
-	 * @example ExampleModel::fields('ids')->get();
+	 * @example ExamplePost::fields('ids')->get();
 	 *
 	 * @param null|int $fields
 	 * @return $this
@@ -262,9 +262,9 @@ abstract class Post
 	 * @see https://developer.wordpress.org/reference/classes/wp_query/#post-page-parameters
 	 * @see https://developer.wordpress.org/reference/functions/get_queried_object/
 	 *
-	 * @example ExampleModel::id(1)->first();
-	 * @example ExampleModel::id([1,2,3], true)->get();
-	 * @example ExampleModel::id()->first();
+	 * @example ExamplePost::id(1)->first();
+	 * @example ExamplePost::id([1,2,3], true)->get();
+	 * @example ExamplePost::id()->first();
 	 *
 	 * @param null|int|array $id
 	 * @param bool $exclude
@@ -286,7 +286,7 @@ abstract class Post
 			if ($queriedObject instanceof WP_Post) {
 				$this->args['p'] = $queriedObject->ID;
 			} else {
-				throw new \Exception('BasePostModel::id is null and cannot verify the queried object is a WP_Post object');
+				throw new \Exception('Post::id is null and cannot verify the queried object is a WP_Post object');
 			}
 		} else {
 			$this->args['p'] = $id;
@@ -301,8 +301,8 @@ abstract class Post
 	 *
 	 * @see https://developer.wordpress.org/reference/classes/wp_query/#order-orderby-parameters
 	 *
-	 * @example ExampleModel::orderBy('date','ASC')->paginate();
-	 * @example ExampleModel::take(3)->orderBy('online','ASC', 'status')->get();
+	 * @example ExamplePost::orderBy('date','ASC')->paginate();
+	 * @example ExamplePost::take(3)->orderBy('online','ASC', 'status')->get();
 	 *
 	 * @param string $orderBy
 	 * @param null|string $order (ASC or DESC)
@@ -334,9 +334,9 @@ abstract class Post
 	 *
 	 * @see https://developer.wordpress.org/reference/classes/wp_query/#pagination-parameters
 	 * @see https://developer.wordpress.org/reference/functions/get_query_var/
-	 * @see BasePostModel::paginate()
+	 * @see Post::paginate()
 	 *
-	 * @example ExampleModel::take(10)->paginate();
+	 * @example ExamplePost::take(10)->paginate();
 	 *
 	 * @param null|int $paged
 	 * @return $this
@@ -358,7 +358,7 @@ abstract class Post
 	 *
 	 * @see https://developer.wordpress.org/reference/classes/wp_query/#pagination-parameters
 	 *
-	 * @example ExampleModel::skip(3)->get();
+	 * @example ExamplePost::skip(3)->get();
 	 *
 	 * @param null|int $skip
 	 * @return $this
@@ -379,7 +379,7 @@ abstract class Post
 	 *
 	 * @see https://developer.wordpress.org/reference/classes/wp_query/#pagination-parameters
 	 *
-	 * @example ExampleModel::take(3)->get();
+	 * @example ExamplePost::take(3)->get();
 	 *
 	 * @param null|int $take
 	 * @return $this
@@ -395,13 +395,13 @@ abstract class Post
 
 	/**
 	 * Return all the post of a certain post type (or multiple)
-	 * Note: DO NOT use this function as is. Create a new Model and extend the BasePostModel. For example NewsModel.
+	 * Note: DO NOT use this function as is. Create a new Model and extend the Post. For example NewsModel.
 	 * And define it in the constructor.
 	 *
 	 * @see https://developer.wordpress.org/reference/classes/wp_query/#post-type-parameters
 	 *
 	 * @example PostModel::type([EXAMPLE_POST_TYPE, NEWS_POST_TYPE])->get();
-	 * @example ExampleModel::all();
+	 * @example ExamplePost::all();
 	 *
 	 * @param null|string|array $postType
 	 * @return $this
@@ -420,8 +420,8 @@ abstract class Post
 	 *
 	 * @see https://developer.wordpress.org/reference/classes/wp_query/#custom-field-post-meta-parameters
 	 *
-	 * @example ExampleModel::where('active', 1)->where('spotlight', 'front')->get();
-	 * @example ExampleModel::where('spotlight', 'footer', 'IN', 'OR')->where('spotlight', 'front')->get();
+	 * @example ExamplePost::where('active', 1)->where('spotlight', 'front')->get();
+	 * @example ExamplePost::where('spotlight', 'footer', 'IN', 'OR')->where('spotlight', 'front')->get();
 	 *
 	 * @param string $meta_key
 	 * @param string $meta_value
@@ -468,8 +468,8 @@ abstract class Post
 	 * @see https://developer.wordpress.org/reference/classes/wp_query/#date-parameters
 	 * @see https://developer.wordpress.org/reference/functions/date_i18n/
 	 *
-	 * @example ExampleModel::whereDate(['year' => 2016)->get();
-	 * @example ExampleModel::whereDate('1-1-2017', 'after', true)->get();
+	 * @example ExamplePost::whereDate(['year' => 2016)->get();
+	 * @example ExamplePost::whereDate('1-1-2017', 'after', true)->get();
 	 *
 	 * @param string | array $date_value
 	 * @param string $date_compare
@@ -519,8 +519,8 @@ abstract class Post
 	 *
 	 * @see https://developer.wordpress.org/reference/classes/wp_query/#taxonomy-parameters
 	 *
-	 * @example ExampleModel::whereTax(EXAMPLE_TAXONOMY, 1)->get();
-	 * @example ExampleModel::whereTax(EXAMPLE_TAXONOMY, 1, 'term_id', IN', 'OR')->whereTax('spotlight', 'front')->get();
+	 * @example ExamplePost::whereTax(EXAMPLE_TAXONOMY, 1)->get();
+	 * @example ExamplePost::whereTax(EXAMPLE_TAXONOMY, 1, 'term_id', IN', 'OR')->whereTax('spotlight', 'front')->get();
 	 *
 	 * @param $tax_key
 	 * @param $tax_terms
@@ -562,13 +562,13 @@ abstract class Post
 	/**
 	 * Parse our query and execute all the functions to make our content super fancy
 	 *
-	 * @see BasePostModel::runquery();
-	 * @see BasePostModel::appendAcfFields();
-	 * @see BasePostModel::appendContent();
-	 * @see BasePostModel::appendExcerpt();
-	 * @see BasePostModel::appendPermalink();
+	 * @see Post::runquery();
+	 * @see Post::appendAcfFields();
+	 * @see Post::appendContent();
+	 * @see Post::appendExcerpt();
+	 * @see Post::appendPermalink();
 	 *
-	 * @example ExampleModel::take(10)->get();
+	 * @example ExamplePost::take(10)->get();
 	 *
 	 * @return array
 	 */
@@ -586,10 +586,10 @@ abstract class Post
 	/**
 	 * Get the first result of our Query
 	 *
-	 * @see BasePostModel::take();
-	 * @see BasePostModel::get();
+	 * @see Post::take();
+	 * @see Post::get();
 	 *
-	 * @example ExampleModel::id(1)->first();
+	 * @example ExamplePost::id(1)->first();
 	 *
 	 * @return \WP_Post
 	 */
@@ -609,15 +609,15 @@ abstract class Post
 	 * Parse our query and execute all the functions to make our content super fancy
 	 * and return it paginated
 	 *
-	 * @see BasePostModel::paged();
-	 * @see BasePostModel::runquery();
-	 * @see BasePostModel::appendAcfFields();
-	 * @see BasePostModel::appendContent();
-	 * @see BasePostModel::appendExcerpt();
-	 * @see BasePostModel::appendPermalink();
-	 * @see BasePostModel::appendPagination();
+	 * @see Post::paged();
+	 * @see Post::runquery();
+	 * @see Post::appendAcfFields();
+	 * @see Post::appendContent();
+	 * @see Post::appendExcerpt();
+	 * @see Post::appendPermalink();
+	 * @see Post::appendPagination();
 	 *
-	 * @example ExampleModel::where('active', 1)->paginate();
+	 * @example ExamplePost::where('active', 1)->paginate();
 	 *
 	 * @return mixed
 	 */
@@ -638,9 +638,9 @@ abstract class Post
 	 * Count the results of our Query
 	 *
 	 * @see https://developer.wordpress.org/reference/classes/wp_query/#properties
-	 * @see BasePostModel::runQuery();
+	 * @see Post::runQuery();
 	 *
-	 * @example ExampleModel::where('active', 1)->count();
+	 * @example ExamplePost::where('active', 1)->count();
 	 *
 	 * @return array
 	 */

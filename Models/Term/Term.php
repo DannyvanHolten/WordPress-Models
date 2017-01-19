@@ -6,17 +6,17 @@ use WP_Term;
 use WP_Post;
 
 /**
- * The BaseTaxonomyModel is used to implement the core functions of get_terms
+ * The Term is used to implement the core functions of get_terms
  *
- * The BaseTaxonomyModel is used for all functions that should be usable in all the other Taxonomy Models.
- * If you want to extend the BaseTaxonomyModel do so by at least defining a taxonomy in your extended class
+ * The Term is used for all functions that should be usable in all the other Taxonomy Models.
+ * If you want to extend the Term do so by at least defining a taxonomy in your extended class
  *
  * @see https://developer.wordpress.org/reference/functions/get_terms/
  *
- * Class BaseTaxonomyModel
- * @package App\Models
+ * Class Term
+ * @package App\Models|Term
  */
-abstract class Term
+class Term
 {
 	/**
 	 * An array of arguments to get the terms
@@ -75,12 +75,12 @@ abstract class Term
 	 * Return all terms.
 	 * Note: Default limits to 0 (ALL). If you need less, adjust the limit.
 	 *
-	 * @see BaseTaxonomyModel::take()
-	 * @see BaseTaxonomyModel::hideEmpty()
-	 * @see BaseTaxonomyModel::get()
+	 * @see Term::take()
+	 * @see Term::hideEmpty()
+	 * @see Term::get()
 	 *
-	 * @example ExampleTaxonomyModel::all();
-	 * @example ExampleTaxonomyModel::all(10);
+	 * @example ExampleTerm::all();
+	 * @example ExampleTerm::all(10);
 	 *
 	 * @param null|int $take
 	 * @return $instance
@@ -97,13 +97,13 @@ abstract class Term
 	/**
 	 * Find a single term by ID | Slug.
 	 *
-	 * @see BaseTaxonomyModel::whereIn();
-	 * @see BaseTaxonomyModel::hideEmpty()
-	 * @see BaseTaxonomyModel::get()
-	 * @see BaseTaxonomyModel::first()
+	 * @see Term::whereIn();
+	 * @see Term::hideEmpty()
+	 * @see Term::get()
+	 * @see Term::first()
 	 *
-	 * @example PageModel::find();
-	 * @example ExampleTaxonomyModel::find([1,2,3]);
+	 * @example ExampleTerm::find();
+	 * @example ExampleTerm::find([1,2,3]);
 	 *
 	 * @param int|string|array $id
 	 * @return $instance
@@ -127,7 +127,7 @@ abstract class Term
 	 *
 	 * @see https://codex.wordpress.org/Class_Reference/WP_Query#Return_Fields_Parameter
 	 *
-	 * @example ExampleModel::fields('ids')->get();
+	 * @example ExampleTerm::fields('ids')->get();
 	 *
 	 * @param null|int $fields
 	 * @return $this
@@ -146,7 +146,7 @@ abstract class Term
 	 *
 	 * @see https://developer.wordpress.org/reference/functions/get_terms/#parameters
 	 *
-	 * @example ExampleTaxonomyModel::hideEmpty(false)->get();
+	 * @example ExampleTerm::hideEmpty(false)->get();
 	 *
 	 * @param bool $hide
 	 * @return $this
@@ -165,8 +165,8 @@ abstract class Term
 	 * @see https://developer.wordpress.org/reference/functions/get_terms/#parameters
 	 * @see https://developer.wordpress.org/reference/functions/get_queried_object/
 	 *
-	 * @example ExampleTaxonomyModel::id(10)->get();
-	 * @example ExampleTaxonomyModel::id([10,20,30])->get();
+	 * @example ExampleTerm::id(10)->get();
+	 * @example ExampleTerm::id([10,20,30])->get();
 	 *
 	 * @param string|array $id
 	 * @param bool $exclude
@@ -183,7 +183,7 @@ abstract class Term
 			if ($queriedObject instanceof WP_Term) {
 				$id = $queriedObject->term_id;
 			} else {
-				throw new \Exception('BaseTaxonomyModel::id is null and cannot verify the queried object is a WP_Term object');
+				throw new \Exception('Term::id is null and cannot verify the queried object is a WP_Term object');
 			}
 		}
 
@@ -210,8 +210,8 @@ abstract class Term
 	 *
 	 * @see https://developer.wordpress.org/reference/functions/get_terms/#parameters
 	 *
-	 * @example ExampleTaxonomyModel::orderBy('date','ASC')->get();
-	 * @example ExampleTaxonomyModel::take(3)->orderBy('online','ASC', 'status')->get();
+	 * @example ExampleTerm::orderBy('date','ASC')->get();
+	 * @example ExampleTerm::take(3)->orderBy('online','ASC', 'status')->get();
 	 *
 	 * @param string $orderBy
 	 * @param null|string $order (ASC or DESC)
@@ -239,7 +239,7 @@ abstract class Term
 	 *
 	 * @see https://developer.wordpress.org/reference/functions/get_terms/#parameters
 	 *
-	 * @example ExampleTaxonomyModel::skip(3)->get();
+	 * @example ExampleTerm::skip(3)->get();
 	 *
 	 * @param int $skip
 	 * @return $this
@@ -255,12 +255,12 @@ abstract class Term
 
 	/**
 	 * Return all the terms of a certain taxonomy type (or multiple)
-	 * Note: DO NOT use this function as is. Create a new Model and extend the TaxonomyModel. For example ExampleTaxonomyModel.
+	 * Note: DO NOT use this function as is. Create a new Model and extend the TaxonomyModel. For example ExampleTerm.
 	 * And define it in the constructor.
 	 *
 	 * @see https://developer.wordpress.org/reference/functions/get_terms/#parameters
 	 *
-	 * @example ExampleTaxonomyModel::all();
+	 * @example ExampleTerm::all();
 	 *
 	 * @param string|array $taxonomy
 	 * @return $this
@@ -280,7 +280,7 @@ abstract class Term
 	 *
 	 * @see https://developer.wordpress.org/reference/functions/get_terms/#parameters
 	 *
-	 * @example ExampleTaxonomyModel::take(3)->get();
+	 * @example ExampleTerm::take(3)->get();
 	 *
 	 * @param $take
 	 * @return $this
@@ -305,8 +305,8 @@ abstract class Term
 	 *
 	 * @see https://developer.wordpress.org/reference/functions/get_terms/#parameters
 	 *
-	 * @example ExampleTaxonomyModel::where('active', 1)->where('spotlight', 'front')->get();
-	 * @example ExampleTaxonomyModel::where('spotlight', 'footer', 'IN', 'OR')->where('spotlight', 'front')->get();
+	 * @example ExampleTerm::where('active', 1)->where('spotlight', 'front')->get();
+	 * @example ExampleTerm::where('spotlight', 'footer', 'IN', 'OR')->where('spotlight', 'front')->get();
 	 *
 	 * @param $meta_key
 	 * @param $meta_value
@@ -346,8 +346,8 @@ abstract class Term
 	 * @see https://developer.wordpress.org/reference/functions/wp_get_post_terms/
 	 * @see https://developer.wordpress.org/reference/functions/get_queried_object/
 	 *
-	 * @example ExampleTaxonomyModel::wherePost()->get();
-	 * @example ExampleTaxonomyModel::wherePost(10)->get();
+	 * @example ExampleTerm::wherePost()->get();
+	 * @example ExampleTerm::wherePost(10)->get();
 	 *
 	 * @param null|int $postID
 	 * @return $this
@@ -361,7 +361,7 @@ abstract class Term
 			if ($queriedObject instanceof WP_Post) {
 				$postID = $queriedObject->ID;
 			} else {
-				throw new \Exception('BaseTaxonomyModel::wherePost is null and cannot verify the queried object is a WP_Post object');
+				throw new \Exception('Term::wherePost is null and cannot verify the queried object is a WP_Post object');
 			}
 		}
 
@@ -382,7 +382,7 @@ abstract class Term
 	 * @see BasePostModel::appendExcerpt();
 	 * @see BasePostModel::appendPermalink();
 	 *
-	 * @example ExampleModel::take(10)->get();
+	 * @example ExampleTerm::take(10)->get();
 	 *
 	 * @return array|int|\WP_Error
 	 */
@@ -404,10 +404,10 @@ abstract class Term
 	/**
 	 * Get the first result of our Query
 	 *
-	 * @see BaseTaxonomyModel::take();
-	 * @see BaseTaxonomyModel::get();
+	 * @see Term::take();
+	 * @see Term::get();
 	 *
-	 * @example ExampleTaxonomyModel::whereIn(1)->first();
+	 * @example ExampleTerm::whereIn(1)->first();
 	 *
 	 * @return mixed
 	 */
@@ -426,9 +426,9 @@ abstract class Term
 	/**
 	 * Count the results of our Query
 	 *
-	 * @see BaseTaxonomyModel::get();
+	 * @see Term::get();
 	 *
-	 * @example ExampleTaxonomyModel::where('active', 1)->count();
+	 * @example ExampleTerm::where('active', 1)->count();
 	 *
 	 * @return mixed
 	 */

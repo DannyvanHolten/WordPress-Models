@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Models\Term;
+namespace App\Models\User;
 
 /**
  * This is the model if you want to get the terms of the Category Taxonomy
  *
- * Class Category
- * @package App\Models|Term
+ * Class Subscriber
+ * @package App\Models|User
  */
-class Category extends Term
+class Subscribe extends User
 {
 
 	/**
-	 * Category constructor.
+	 * Subscriber constructor.
 	 *
 	 * Set all the arguments that are default for this Model
 	 */
 	public function __construct()
 	{
-		$this->type('category');
+		$this->type('subscriber');
 	}
 }

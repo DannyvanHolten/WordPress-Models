@@ -5,8 +5,8 @@ namespace App\Models\Post;
 /**
  * This is the model if you want to get posts of the page post type.
  *
- * Class PageModel
- * @package App\Models
+ * Class Page
+ * @package App\Models|Post
  */
 class Page extends Post
 {
@@ -25,8 +25,8 @@ class Page extends Post
 	 * Return a single template page.
 	 * Based on the themosis page template postmeta
 	 *
-	 * @see https://codex.wordpress.org/Class_Reference/WP_Query#Custom_Field_Parameters
-	 * @see BaseModel::meta()
+	 * @see https://developer.wordpress.org/reference/classes/wp_query/#custom-field-post-meta-parameters
+	 * @see Post::where()
 	 *
 	 * @param null $template
 	 * @return $this
