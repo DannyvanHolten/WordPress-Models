@@ -1,8 +1,9 @@
 <?php
 
-namespace Models\Post;
+namespace Models\PostModel;
 
 use WP_Query;
+use WP_Post;
 use Input;
 use Config;
 
@@ -15,9 +16,9 @@ use Config;
  * @see https://developer.wordpress.org/reference/classes/wp_query/
  *
  * Class WP_Post
- * @package App\Models|Post
+ * @package App\Models|PostModel
  */
-abstract class WP_Post
+abstract class PostModel
 {
 
 	/**
@@ -123,7 +124,7 @@ abstract class WP_Post
 	 * @example ExamplePost::find([1,2,3]);
 	 *
 	 * @param null|int|array $id
-	 * @return \WP_Post
+	 * @return WP_Post
 	 */
 	public static function find($id = null)
 	{
@@ -208,6 +209,8 @@ abstract class WP_Post
 	 *
 	 * @see https://github.com/scribu/wp-posts-to-posts/wiki
 	 *
+	 * @todo: Add examples
+	 *
 	 * @param $connectedType
 	 * @param $connectedItems
 	 * @param bool|false $noPaging
@@ -280,7 +283,7 @@ abstract class WP_Post
 		} elseif ($id === null) {
 			$queriedObject = get_queried_object();
 
-			if ($queriedObject instanceof \WP_Post) {
+			if ($queriedObject instanceof WP_Post) {
 				$this->args['p'] = $queriedObject->ID;
 			} else {
 				throw new \Exception('Post::id is null and cannot verify the queried object is a WP_Post object');
@@ -587,7 +590,7 @@ abstract class WP_Post
 	 *
 	 * @example ExamplePost::id(1)->first();
 	 *
-	 * @return \WP_Post
+	 * @return WP_Post
 	 */
 	public function first()
 	{
@@ -660,7 +663,7 @@ abstract class WP_Post
 	{
 		if (function_exists('get_fields')) {
 			foreach ($this->query->posts as $post) {
-				if ($post instanceof \WP_Post) {
+				if ($post instanceof WP_Post) {
 					$post->fields = get_fields($post->ID);
 				}
 			}
@@ -679,7 +682,7 @@ abstract class WP_Post
 	private function appendContent()
 	{
 		foreach ($this->query->posts as $post) {
-			if ($post instanceof \WP_Post) {
+			if ($post instanceof WP_Post) {
 				$post->post_content = apply_filters('the_content', $post->post_content);
 			}
 		}
@@ -700,7 +703,7 @@ abstract class WP_Post
 	{
 		foreach ($this->query->posts as $post) {
 
-			if ($post instanceof \WP_Post) {
+			if ($post instanceof WP_Post) {
 				if ($post->post_excerpt === '') {
 					$post->post_excerpt = strip_shortcodes($post->post_content);
 					$post->post_excerpt = apply_filters('the_content', $post->post_excerpt);
@@ -751,7 +754,7 @@ abstract class WP_Post
 	private function appendPermalink()
 	{
 		foreach ($this->query->posts as $post) {
-			if ($post instanceof \WP_Post) {
+			if ($post instanceof WP_Post) {
 				$post->permalink = get_the_permalink($post->ID);
 			}
 		}

@@ -1,14 +1,14 @@
 <?php
 
-namespace Models\User;
+namespace Models\UserModel;
 
 /**
  * This is the model if you want to get all the users
  *
  * Class User
- * @package App\Models|User
+ * @package App\Models|UserModel
  */
-class User extends WP_User
+class User extends UserModel
 {
 	/**
 	 * Subscriber constructor.

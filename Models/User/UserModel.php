@@ -1,9 +1,10 @@
 <?php
 
-namespace Models\User;
+namespace Models\UserModel;
 
-use Models\Post\Post;
-use Models\Post\WP_Post;
+use Models\PostModel\Post;
+use WP_Post;
+use WP_User;
 
 /**
  * The WP_User is used to implement the core functions of get_users
@@ -14,9 +15,9 @@ use Models\Post\WP_Post;
  * @see https://developer.wordpress.org/reference/functions/get_users/
  *
  * Class WP_User
- * @package App\Models\User
+ * @package App\Models\UserModel
  */
-abstract class WP_User
+abstract class UserModel
 {
 	/**
 	 * An array of arguments to get the terms
@@ -343,7 +344,7 @@ abstract class WP_User
 		if ($postID === null) {
 			$queriedObject = get_queried_object();
 
-			if ($queriedObject instanceof \WP_Post) {
+			if ($queriedObject instanceof WP_Post) {
 				$postID = $queriedObject->ID;
 			} else {
 				throw new \Exception('User::published is null and cannot verify the queried object is a WP_Post object');
@@ -416,7 +417,7 @@ abstract class WP_User
 	{
 		if (function_exists('get_fields')) {
 			foreach ($this->users as $user) {
-				if ($user instanceof \WP_User) {
+				if ($user instanceof WP_User) {
 					$user->fields = get_fields('user_' . $user->ID);
 				}
 			}
@@ -436,7 +437,7 @@ abstract class WP_User
 	private function appendPermalink()
 	{
 		foreach ($this->users as $user) {
-			if ($user instanceof \WP_User) {
+			if ($user instanceof WP_User) {
 				$user->permalink = get_author_posts_url($user->ID);
 			}
 		}

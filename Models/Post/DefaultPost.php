@@ -1,14 +1,14 @@
 <?php
 
-namespace Models\Post;
+namespace Models\PostModel;
 
 /**
  * This is the model if you want to get posts of the default post type.
  *
  * Class DefaultPost
- * @package App\Models|Post
+ * @package App\Models|PostModel
  */
-class DefaultPost extends WP_Post
+class DefaultPost extends PostModel
 {
 	/**
 	 * PostModel constructor.

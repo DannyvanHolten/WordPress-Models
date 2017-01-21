@@ -1,14 +1,14 @@
 <?php
 
-namespace Models\Post;
+namespace Models\PostModel;
 
 /**
  * This is the model if you want to get posts of the page post type.
  *
  * Class Page
- * @package App\Models|Post
+ * @package App\Models|PostModel
  */
-class Page extends WP_Post
+class Page extends PostModel
 {
 	/**
 	 * PageModel constructor.

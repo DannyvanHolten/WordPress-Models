@@ -1,14 +1,14 @@
 <?php
 
-namespace Models\Term;
+namespace Models\TermModel;
 
 /**
  * This is the model if you want to get the terms of the Category Taxonomy
  *
  * Class Category
- * @package App\Models|Term
+ * @package App\Models|TermModel
  */
-class Category extends Term
+class Category extends TermModel
 {
 	/**
 	 * Category constructor.

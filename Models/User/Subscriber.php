@@ -1,14 +1,14 @@
 <?php
 
-namespace Models\User;
+namespace Models\UserModel;
 
 /**
  * This is the model if you want to get the users of the rol subscriber
  *
  * Class Subscriber
- * @package App\Models|User
+ * @package App\Models|UserModel
  */
-class Subscriber extends User
+class Subscriber extends UserModel
 {
 	/**
 	 * Subscriber constructor.
