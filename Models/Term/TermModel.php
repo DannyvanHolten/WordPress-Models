@@ -13,8 +13,8 @@ use WP_Term;
  *
  * @see https://developer.wordpress.org/reference/functions/get_terms/
  *
- * Class WP_Term
- * @package App\Models|TermModel
+ * Class TermModel
+ * @package App\Models\TermModel
  */
 abstract class TermModel
 {
@@ -45,6 +45,7 @@ abstract class TermModel
 	 *
 	 * @param $name
 	 * @param $arguments
+	 *
 	 * @return $this
 	 */
 	public function __call($name, $arguments)
@@ -60,6 +61,7 @@ abstract class TermModel
 	 *
 	 * @param $name
 	 * @param $arguments
+	 *
 	 * @return static
 	 */
 	public static function __callStatic($name, $arguments)
@@ -82,6 +84,7 @@ abstract class TermModel
 	 * @example ExampleTerm::all(10);
 	 *
 	 * @param null|int $take
+	 *
 	 * @return $instance
 	 */
 	public static function all($take = 0)
@@ -104,6 +107,7 @@ abstract class TermModel
 	 * @example ExampleTerm::find([1,2,3]);
 	 *
 	 * @param int|string|array $id
+	 *
 	 * @return $instance
 	 */
 	public static function find($id = null)
@@ -128,6 +132,7 @@ abstract class TermModel
 	 * @example ExampleTerm::fields('ids')->get();
 	 *
 	 * @param null|int $fields
+	 *
 	 * @return $this
 	 */
 	protected function fields($fields = null)
@@ -147,6 +152,7 @@ abstract class TermModel
 	 * @example ExampleTerm::hideEmpty(false)->get();
 	 *
 	 * @param bool $hide
+	 *
 	 * @return $this
 	 */
 	protected function hideEmpty($hide = true)
@@ -169,7 +175,9 @@ abstract class TermModel
 	 * @param string|array $id
 	 * @param bool $exclude
 	 * @param bool $hideDescendants
+	 *
 	 * @return $this
+	 *
 	 * @throws \Exception
 	 */
 	protected function id($id = null, $exclude = false, $hideDescendants = false)
@@ -213,6 +221,7 @@ abstract class TermModel
 	 * @param string $orderBy
 	 * @param null|string $order (ASC or DESC)
 	 * @param null|string $meta_key
+	 *
 	 * @return $this
 	 */
 	protected function orderBy($orderBy, $order = null, $meta_key = null)
@@ -238,6 +247,7 @@ abstract class TermModel
 	 * @example ExampleTerm::skip(3)->get();
 	 *
 	 * @param int $skip
+	 *
 	 * @return $this
 	 */
 	protected function skip($skip = 0)
@@ -259,6 +269,7 @@ abstract class TermModel
 	 * @example ExampleTerm::all();
 	 *
 	 * @param string|array $taxonomy
+	 *
 	 * @return $this
 	 */
 	protected function type($taxonomy = null)
@@ -279,6 +290,7 @@ abstract class TermModel
 	 * @example ExampleTerm::take(3)->get();
 	 *
 	 * @param $take
+	 *
 	 * @return $this
 	 */
 	protected function take($take = null)
@@ -307,6 +319,7 @@ abstract class TermModel
 	 * @param $meta_key
 	 * @param $meta_value
 	 * @param string $meta_compare
+	 *
 	 * @return $this
 	 */
 	protected function where($meta_key, $meta_value, $meta_compare = '=', $meta_relation = 'AND')
@@ -346,7 +359,9 @@ abstract class TermModel
 	 * @example ExampleTerm::wherePost(10)->get();
 	 *
 	 * @param null|int $postID
+	 *
 	 * @return $this
+	 *
 	 * @throws \Exception
 	 */
 	protected function wherePost($postID = null)
@@ -377,7 +392,7 @@ abstract class TermModel
 	 *
 	 * @example ExampleTerm::take(10)->get();
 	 *
-	 * @return array|int|\WP_Error
+	 * @return array
 	 */
 	public function get()
 	{
@@ -397,7 +412,7 @@ abstract class TermModel
 	 *
 	 * @example ExampleTerm::whereIn(1)->first();
 	 *
-	 * @return mixed
+	 * @return bool|mixed
 	 */
 	public function first()
 	{
@@ -418,7 +433,7 @@ abstract class TermModel
 	 *
 	 * @example ExampleTerm::where('active', 1)->count();
 	 *
-	 * @return mixed
+	 * @return int
 	 */
 	public function count()
 	{
@@ -434,7 +449,7 @@ abstract class TermModel
 	 *
 	 * @see https://www.advancedcustomfields.com/resources/get_fields/
 	 *
-	 * @return mixed
+	 * @return $this
 	 */
 	private function appendAcfFields()
 	{
@@ -454,7 +469,7 @@ abstract class TermModel
 	 *
 	 * @see https://developer.wordpress.org/reference/functions/wpautop/
 	 *
-	 * @return mixed
+	 * @return $this
 	 */
 	private function appendDescription()
 	{
@@ -472,7 +487,7 @@ abstract class TermModel
 	 *
 	 * @see https://developer.wordpress.org/reference/functions/get_term_link/
 	 *
-	 * @return mixed
+	 * @return $this
 	 */
 	private function appendPermalink()
 	{

@@ -14,8 +14,8 @@ use WP_User;
  *
  * @see https://developer.wordpress.org/reference/functions/get_users/
  *
- * Class WP_User
- * @package App\Models\UserModel
+ * Class UserModel
+ * @package Models\UserModel
  */
 abstract class UserModel
 {
@@ -76,6 +76,7 @@ abstract class UserModel
 	 * @example ExampleUser::all(10);
 	 *
 	 * @param null|int $take
+	 *
 	 * @return $instance
 	 */
 	public static function all($take = -1)
@@ -96,6 +97,7 @@ abstract class UserModel
 	 * @example ExampleUser::archive(10);
 	 *
 	 * @param null|string|int $take
+	 *
 	 * @return $instance
 	 */
 	public static function archive($take = null)
@@ -117,6 +119,7 @@ abstract class UserModel
 	 * @example ExampleUser::find([1,2,3]);
 	 *
 	 * @param int|string|array $id
+	 *
 	 * @return $instance
 	 */
 	public static function find($id = null)
@@ -142,6 +145,7 @@ abstract class UserModel
 	 *
 	 * @param null|int|string|array $id
 	 * @param bool $exclude
+	 *
 	 * @return $this
 	 */
 	protected function id($id = null, $exclude = false)
@@ -177,6 +181,7 @@ abstract class UserModel
 	 * @example ExampleUser::fields('ids')->get();
 	 *
 	 * @param null|int $fields
+	 *
 	 * @return $this
 	 */
 	protected function fields($fields = null)
@@ -200,6 +205,7 @@ abstract class UserModel
 	 * @param string $orderBy
 	 * @param null|string $order (ASC or DESC)
 	 * @param null|string $meta_key
+	 *
 	 * @return $this
 	 */
 	protected function orderBy($orderBy, $order = null, $meta_key = null)
@@ -225,6 +231,7 @@ abstract class UserModel
 	 * @example ExampleUser::skip(3)->get();
 	 *
 	 * @param int $skip
+	 *
 	 * @return $this
 	 */
 	protected function skip($skip = 0)
@@ -247,6 +254,7 @@ abstract class UserModel
 	 * @param null $role
 	 * @param bool $exclude
 	 * @param bool $strict
+	 *
 	 * @return $this
 	 */
 	protected function type($role = null, $exclude = false, $strict = false)
@@ -277,6 +285,7 @@ abstract class UserModel
 	 * @example ExampleUser::take(3)->get();
 	 *
 	 * @param $take
+	 *
 	 * @return $this
 	 */
 	protected function take($take = null)
@@ -299,6 +308,7 @@ abstract class UserModel
 	 * @param $meta_key
 	 * @param $meta_value
 	 * @param string $meta_compare
+	 *
 	 * @return $this
 	 */
 	protected function where($meta_key, $meta_value, $meta_compare = '=', $meta_relation = 'AND')
@@ -336,7 +346,9 @@ abstract class UserModel
 	 * @example ExampleUser::published(100)->get();
 	 *
 	 * @param null|int $postID
+	 *
 	 * @return $this
+	 *
 	 * @throws \Exception
 	 */
 	protected function published($postID = null)
@@ -356,6 +368,17 @@ abstract class UserModel
 		return $this;
 	}
 
+	/**
+	 * Parse our query and execute all the functions to make our content super fancy
+	 *
+	 * @see BasePostModel::runquery();
+	 * @see BasePostModel::appendAcfFields();
+	 * @see BasePostModel::appendPermalink();
+	 *
+	 * @example ExampleUser::take(10)->get();
+	 *
+	 * @return array
+	 */
 	public function get()
 	{
 		$this->runQuery()
@@ -373,7 +396,7 @@ abstract class UserModel
 	 *
 	 * @example ExampleUser::whereIn(1)->first();
 	 *
-	 * @return mixed
+	 * @return bool|mixed
 	 */
 	public function first()
 	{
@@ -394,7 +417,7 @@ abstract class UserModel
 	 *
 	 * @example ExampleUser::where('active', 1)->count();
 	 *
-	 * @return mixed
+	 * @return int
 	 *
 	 */
 	public function count()
@@ -411,7 +434,7 @@ abstract class UserModel
 	 *
 	 * @see https://www.advancedcustomfields.com/resources/get_fields/
 	 *
-	 * @return mixed
+	 * @return $this
 	 */
 	private function appendAcfFields()
 	{
@@ -432,7 +455,7 @@ abstract class UserModel
 	 *
 	 * @see https://developer.wordpress.org/reference/functions/get_author_posts_url/
 	 *
-	 * @return mixed
+	 * @return $this
 	 */
 	private function appendPermalink()
 	{

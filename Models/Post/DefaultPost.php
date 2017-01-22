@@ -6,7 +6,7 @@ namespace Models\PostModel;
  * This is the model if you want to get posts of the default post type.
  *
  * Class DefaultPost
- * @package App\Models|PostModel
+ * @package App\Models\PostModel
  */
 class DefaultPost extends PostModel
 {

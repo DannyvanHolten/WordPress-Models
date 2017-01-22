@@ -4,8 +4,6 @@ namespace Models\PostModel;
 
 use WP_Query;
 use WP_Post;
-use Input;
-use Config;
 
 /**
  * TheWP_ Post is used to implement the core functions of the WP_Query
@@ -15,8 +13,8 @@ use Config;
  *
  * @see https://developer.wordpress.org/reference/classes/wp_query/
  *
- * Class WP_Post
- * @package App\Models|PostModel
+ * Class PostModel
+ * @package App\Models\PostModel
  */
 abstract class PostModel
 {
@@ -46,6 +44,7 @@ abstract class PostModel
 	 *
 	 * @param $name
 	 * @param $arguments
+	 *
 	 * @return $this
 	 */
 	public function __call($name, $arguments)
@@ -61,6 +60,7 @@ abstract class PostModel
 	 *
 	 * @param $name
 	 * @param $arguments
+	 *
 	 * @return static
 	 */
 	public static function __callStatic($name, $arguments)
@@ -83,6 +83,7 @@ abstract class PostModel
 	 * @example ExamplePost::all(10);
 	 *
 	 * @param null|string|int $take
+	 *
 	 * @return array
 	 */
 	public static function all($take = '-1')
@@ -103,6 +104,7 @@ abstract class PostModel
 	 * @example ExamplePost::archive(10);
 	 *
 	 * @param null|string|int $take
+	 *
 	 * @return $instance
 	 */
 	public static function archive($take = null)
@@ -124,7 +126,8 @@ abstract class PostModel
 	 * @example ExamplePost::find([1,2,3]);
 	 *
 	 * @param null|int|array $id
-	 * @return WP_Post
+	 *
+	 * @return $instance
 	 */
 	public static function find($id = null)
 	{
@@ -146,11 +149,11 @@ abstract class PostModel
 	 * @see https://developer.wordpress.org/reference/classes/wp_query/#order-orderby-parameters
 	 * @see https://www.relevanssi.com/user-manual/functions/#relevanssi_do_query
 	 * @see Post::paginate();
-	 * @see Input::get();
 	 *
 	 * @example PostModel::search();
 	 *
 	 * @param string $search
+	 *
 	 * @return $instance
 	 */
 	public static function search($search = null)
@@ -158,7 +161,7 @@ abstract class PostModel
 		$instance = new static;
 
 		if ($search == null) {
-			$search = Input::get('s');
+			$search = $_GET['s'];
 		}
 
 		/*
@@ -184,6 +187,7 @@ abstract class PostModel
 	 *
 	 * @param null $author
 	 * @param bool $exclude
+	 *
 	 * @return $this
 	 */
 	protected function by($author = null, $exclude = false)
@@ -216,6 +220,7 @@ abstract class PostModel
 	 * @param bool|false $noPaging
 	 * @param bool|false $suppressFilters
 	 * @param bool|false $connectedMeta
+	 *
 	 * @return $this
 	 */
 	protected function connected(
@@ -245,6 +250,7 @@ abstract class PostModel
 	 * @example ExamplePost::fields('ids')->get();
 	 *
 	 * @param null|int $fields
+	 *
 	 * @return $this
 	 */
 	protected function fields($fields = null)
@@ -269,7 +275,9 @@ abstract class PostModel
 	 *
 	 * @param null|int|array $id
 	 * @param bool $exclude
+	 *
 	 * @return $this
+	 *
 	 * @throws \Exception
 	 */
 	protected function id($id = null, $exclude = false)
@@ -307,6 +315,7 @@ abstract class PostModel
 	 * @param string $orderBy
 	 * @param null|string $order (ASC or DESC)
 	 * @param null|string $meta_key
+	 *
 	 * @return $this
 	 */
 	protected function orderBy(
@@ -338,6 +347,7 @@ abstract class PostModel
 	 * @example ExamplePost::take(10)->paginate();
 	 *
 	 * @param null|int $paged
+	 *
 	 * @return $this
 	 */
 	protected function paged(
@@ -360,6 +370,7 @@ abstract class PostModel
 	 * @example ExamplePost::skip(3)->get();
 	 *
 	 * @param null|int $skip
+	 *
 	 * @return $this
 	 */
 	protected function skip($skip = 0)
@@ -381,6 +392,7 @@ abstract class PostModel
 	 * @example ExamplePost::take(3)->get();
 	 *
 	 * @param null|int $take
+	 *
 	 * @return $this
 	 */
 	protected function take($take = null)
@@ -403,6 +415,7 @@ abstract class PostModel
 	 * @example ExamplePost::all();
 	 *
 	 * @param null|string|array $postType
+	 *
 	 * @return $this
 	 */
 	protected function type($postType = null)
@@ -426,6 +439,7 @@ abstract class PostModel
 	 * @param string $meta_value
 	 * @param string $meta_compare
 	 * @param string $meta_relation
+	 *
 	 * @return $this
 	 */
 	protected function where(
@@ -474,6 +488,7 @@ abstract class PostModel
 	 * @param string $date_compare
 	 * @param bool $date_inclusive
 	 * @param string $meta_relation
+	 *
 	 * @return $this
 	 */
 	protected function whereDate(
@@ -524,6 +539,7 @@ abstract class PostModel
 	 * @param $tax_key
 	 * @param $tax_terms
 	 * @param string $tax_compare
+	 *
 	 * @return $this
 	 */
 	protected function whereTax(
@@ -590,7 +606,7 @@ abstract class PostModel
 	 *
 	 * @example ExamplePost::id(1)->first();
 	 *
-	 * @return WP_Post
+	 * @return array
 	 */
 	public function first()
 	{
@@ -618,7 +634,7 @@ abstract class PostModel
 	 *
 	 * @example ExamplePost::where('active', 1)->paginate();
 	 *
-	 * @return mixed
+	 * @return array
 	 */
 	public function paginate()
 	{
@@ -695,6 +711,7 @@ abstract class PostModel
 	 *
 	 * @see https://developer.wordpress.org/reference/functions/strip_shortcodes/
 	 * @see https://developer.wordpress.org/reference/functions/apply_filters/
+	 * @see https://developer.wordpress.org/reference/functions/wp_trim_excerpt$/
 	 * @see https://developer.wordpress.org/reference/functions/wpautop/
 	 *
 	 * @return $this
@@ -776,9 +793,7 @@ abstract class PostModel
 			$this->query = new WP_Query($this->args);
 		}
 
-		/*
-		 * Execute the revelanssi query function if relavanssi is active.
-		 */
+		//Execute the revelanssi query function if relavanssi is active.
 		if (isset($this->args['s']) && function_exists('relevanssi_do_query')) {
 			relevanssi_do_query($this->query);
 		}

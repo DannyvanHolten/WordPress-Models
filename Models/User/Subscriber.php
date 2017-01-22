@@ -6,7 +6,7 @@ namespace Models\UserModel;
  * This is the model if you want to get the users of the rol subscriber
  *
  * Class Subscriber
- * @package App\Models|UserModel
+ * @package Models\UserModel
  */
 class Subscriber extends UserModel
 {

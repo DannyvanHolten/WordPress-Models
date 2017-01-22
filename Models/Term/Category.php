@@ -6,7 +6,7 @@ namespace Models\TermModel;
  * This is the model if you want to get the terms of the Category Taxonomy
  *
  * Class Category
- * @package App\Models|TermModel
+ * @package App\Models\TermModel
  */
 class Category extends TermModel
 {

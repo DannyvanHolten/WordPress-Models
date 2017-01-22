@@ -6,7 +6,7 @@ namespace Models\UserModel;
  * This is the model if you want to get all the users
  *
  * Class User
- * @package App\Models|UserModel
+ * @package Models\UserModel
  */
 class User extends UserModel
 {

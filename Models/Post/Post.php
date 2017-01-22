@@ -6,7 +6,7 @@ namespace Models\PostModel;
  * This is the model if you want to get posts of all the post types.
  *
  * Class Post
- * @package App\Models|PostModel
+ * @package App\Models\PostModel
  */
 class Post extends PostModel
 {
