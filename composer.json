@@ -1,5 +1,5 @@
 {
-  "name": "wordpress-plugin/models",
+  "name": "dannyvanholten/wordpress-models",
   "description": "Model to get Posts from the WordPress Database for the Themosis Framework",
   "type": "library",
   "license": "GPL-3.0+",
