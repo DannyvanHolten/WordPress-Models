@@ -6,7 +6,7 @@ namespace Models\PostModel;
  * This is the model if you want to get posts of the page post type.
  *
  * Class Page
- * @package App\Models\PostModel
+ * @package Models\PostModel
  */
 class Page extends PostModel
 {

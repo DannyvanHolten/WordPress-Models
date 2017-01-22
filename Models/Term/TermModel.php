@@ -14,7 +14,7 @@ use WP_Term;
  * @see https://developer.wordpress.org/reference/functions/get_terms/
  *
  * Class TermModel
- * @package App\Models\TermModel
+ * @package Models\TermModel
  */
 abstract class TermModel
 {

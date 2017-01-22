@@ -14,7 +14,7 @@ use WP_Post;
  * @see https://developer.wordpress.org/reference/classes/wp_query/
  *
  * Class PostModel
- * @package App\Models\PostModel
+ * @package Models\PostModel
  */
 abstract class PostModel
 {
