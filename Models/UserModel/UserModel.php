@@ -375,7 +375,7 @@ abstract class UserModel
 	 * @see UserModel::appendAcfFields();
 	 * @see UserModel::appendPermalink();
 	 *
-	 * @example ExampleUser::take(10)->query();
+	 * @example ExampleUser::take(10)->query	();
 	 *
 	 * @return array
 	 */
