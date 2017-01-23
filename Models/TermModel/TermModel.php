@@ -384,11 +384,29 @@ abstract class TermModel
 	/**
 	 * Parse our query and execute all the functions to make our content super fancy
 	 *
-	 * @see BasePostModel::runquery();
-	 * @see BasePostModel::appendAcfFields();
-	 * @see BasePostModel::appendContent();
-	 * @see BasePostModel::appendExcerpt();
-	 * @see BasePostModel::appendPermalink();
+	 * @see TermModel::runQuery();
+	 * @see TermModel::appendAcfFields();
+	 * @see TermModel::appendContent();
+	 * @see TermModel::appendPermalink();
+	 *
+	 * @example ExampleTerm::take(10)->query();
+	 *
+	 * @return array
+	 */
+	public function query()
+	{
+		$this->runQuery()
+			->appendAcfFields()
+			->appendContent()
+			->appendPermalink();
+
+		return collect($this->terms);
+	}
+
+	/**
+	 * Return all items of our collection build by the query function
+	 *
+	 * @see UserModel::query();
 	 *
 	 * @example ExampleTerm::take(10)->get();
 	 *
@@ -396,34 +414,25 @@ abstract class TermModel
 	 */
 	public function get()
 	{
-		$this->runQuery()
-			->appendAcfFields()
-			->appendDescription()
-			->appendPermalink();
-
-		return $this->terms;
+		return $this->query()
+			->all();
 	}
 
 	/**
-	 * Get the first result of our Query
+	 * Get the first result of our collection
 	 *
-	 * @see Term::take();
-	 * @see Term::get();
+	 * @see TermModel::take();
+	 * @see TermModel::get();
 	 *
-	 * @example ExampleTerm::whereIn(1)->first();
+	 * @example ExampleTerm::id(1)->first();
 	 *
-	 * @return bool|mixed
+	 * @return array
 	 */
 	public function first()
 	{
-		$this->take(1)
-			->get();
-
-		if (isset($this->terms[0])) {
-			return $this->terms[0];
-		}
-
-		return false;
+		return $this->take(1)
+			->query()
+			->first();
 	}
 
 	/**
@@ -471,7 +480,7 @@ abstract class TermModel
 	 *
 	 * @return $this
 	 */
-	private function appendDescription()
+	private function appendContent()
 	{
 		foreach ($this->terms as $term) {
 			if ($term instanceof WP_Term) {

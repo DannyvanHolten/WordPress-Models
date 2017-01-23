@@ -371,9 +371,27 @@ abstract class UserModel
 	/**
 	 * Parse our query and execute all the functions to make our content super fancy
 	 *
-	 * @see BasePostModel::runquery();
-	 * @see BasePostModel::appendAcfFields();
-	 * @see BasePostModel::appendPermalink();
+	 * @see UserModel::runquery();
+	 * @see UserModel::appendAcfFields();
+	 * @see UserModel::appendPermalink();
+	 *
+	 * @example ExampleUser::take(10)->query();
+	 *
+	 * @return array
+	 */
+	public function query()
+	{
+		$this->runQuery()
+			->appendAcfFields()
+			->appendPermalink();
+
+		return collect($this->users);
+	}
+
+	/**
+	 * Return all items of our collection build by the query function
+	 *
+	 * @see UserModel::query();
 	 *
 	 * @example ExampleUser::take(10)->get();
 	 *
@@ -381,33 +399,25 @@ abstract class UserModel
 	 */
 	public function get()
 	{
-		$this->runQuery()
-			->appendAcfFields()
-			->appendPermalink();
-
-		return $this->users;
+		return $this->query()
+			->all();
 	}
 
 	/**
-	 * Get the first result of our Query
+	 * Get the first result of our collection
 	 *
-	 * @see User::take();
-	 * @see User::get();
+	 * @see UserModel::take();
+	 * @see UserModel::get();
 	 *
-	 * @example ExampleUser::whereIn(1)->first();
+	 * @example ExampleUser::id(1)->first();
 	 *
-	 * @return bool|mixed
+	 * @return array
 	 */
 	public function first()
 	{
-		$this->take(1)
-			->get();
-
-		if (isset($this->users[0])) {
-			return $this->users[0];
-		}
-
-		return false;
+		return $this->take(1)
+			->query()
+			->first();
 	}
 
 	/**

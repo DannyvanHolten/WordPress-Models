@@ -577,17 +577,17 @@ abstract class PostModel
 	/**
 	 * Parse our query and execute all the functions to make our content super fancy
 	 *
-	 * @see Post::runquery();
-	 * @see Post::appendAcfFields();
-	 * @see Post::appendContent();
-	 * @see Post::appendExcerpt();
-	 * @see Post::appendPermalink();
+	 * @see PostModel::runQuery();
+	 * @see PostModel::appendAcfFields();
+	 * @see PostModel::appendContent();
+	 * @see PostModel::appendExcerpt();
+	 * @see PostModel::appendPermalink();
 	 *
-	 * @example ExamplePost::take(10)->get();
+	 * @example ExamplePost::take(10)->query();
 	 *
-	 * @return array
+	 * @return mixed
 	 */
-	public function get()
+	public function query()
 	{
 		$this->runQuery()
 			->appendAcfFields()
@@ -595,14 +595,29 @@ abstract class PostModel
 			->appendExcerpt()
 			->appendPermalink();
 
-		return $this->query->posts;
+		return collect($this->query->posts);
 	}
 
 	/**
-	 * Get the first result of our Query
+	 * Return all items of our collection build by the query function
 	 *
-	 * @see Post::take();
-	 * @see Post::get();
+	 * @see PostModel::query();
+	 *
+	 * @example ExamplePost::take(10)->get();
+	 *
+	 * @return array
+	 */
+	public function get()
+	{
+		return $this->query()
+			->all();
+	}
+
+	/**
+	 * Get the first result of our collection
+	 *
+	 * @see PostModel::take();
+	 * @see PostModel::get();
 	 *
 	 * @example ExamplePost::id(1)->first();
 	 *
@@ -610,14 +625,9 @@ abstract class PostModel
 	 */
 	public function first()
 	{
-		$this->take(1)
-			->get();
-
-		if ($this->query->posts) {
-			return $this->query->posts[0];
-		}
-
-		return false;
+		return $this->take(1)
+			->query()
+			->first();
 	}
 
 	/**
@@ -646,7 +656,7 @@ abstract class PostModel
 			->appendPermalink()
 			->appendPagination();
 
-		return $this->results;
+		return collect($this->results);
 	}
 
 	/**
@@ -744,7 +754,9 @@ abstract class PostModel
 	 */
 	private function appendPagination()
 	{
-		if (!function_exists('wp_pagenavi')) {
+		$this->results['posts'] = $this->query->posts;
+
+		if (function_exists('wp_pagenavi')) {
 			$this->results['pagination'] = wp_pagenavi([
 				'query'         => $this->query,
 				'echo'          => false,
@@ -754,8 +766,6 @@ abstract class PostModel
 		} else {
 			$this->results['pagination'] = paginate_links();
 		}
-
-		$this->results['posts'] = $this->query->posts;
 
 		return $this;
 	}
