@@ -484,7 +484,7 @@ abstract class PostModel
 	/**
 	 * Execute PostModel::where with meta_relation OR
 	 *
-	 * @see https://developer.wordpress.org/reference/classes/wp_query/#custom-field-post-meta-parameters
+	 * @see PostModel::where();
 	 *
 	 * @example ExamplePost::where('active', 1)->orWhere('spotlight', 'front')->get();
 	 *
@@ -494,11 +494,8 @@ abstract class PostModel
 	 *
 	 * @return $this
 	 */
-	protected function orWhere(
-		$meta_key,
-		$meta_value,
-		$meta_compare = '='
-	) {
+	protected function orWhere($meta_key, $meta_value, $meta_compare = '=')
+	{
 		$this->where($meta_key, $meta_value, $meta_compare, 'OR');
 
 		return $this;
