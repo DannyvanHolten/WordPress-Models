@@ -372,9 +372,9 @@ abstract class PostModel
 	 *
 	 * @example ExamplePost::where('active', 1)->orWhere('spotlight', 'front')->get();
 	 *
-	 * @param string $meta_key
-	 * @param string $meta_value
-	 * @param string $meta_compare
+	 * @param $date_key
+	 * @param $date_value
+	 * @param string $date_compare
 	 *
 	 * @return $this
 	 */
@@ -392,9 +392,10 @@ abstract class PostModel
 	 *
 	 * @example ExamplePost::where('active', 1)->orWhere('spotlight', 'front')->get();
 	 *
-	 * @param string $meta_key
-	 * @param string $meta_value
-	 * @param string $meta_compare
+	 * @param $tax_key
+	 * @param $tax_terms
+	 * @param string $tax_compare
+	 * @param string $tax_fields
 	 *
 	 * @return $this
 	 */
