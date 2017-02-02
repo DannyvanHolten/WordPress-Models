@@ -240,6 +240,26 @@ abstract class TermModel
 	}
 
 	/**
+	 * Execute TermModel::where with meta_relation OR
+	 *
+	 * @see TermModel::where();
+	 *
+	 * @example ExampleTerm::where('active', 1)->orWhere('spotlight', 'front')->get();
+	 *
+	 * @param string $meta_key
+	 * @param string $meta_value
+	 * @param string $meta_compare
+	 *
+	 * @return $this
+	 */
+	protected function orWhere($meta_key, $meta_value, $meta_compare = '=')
+	{
+		$this->where($meta_key, $meta_value, $meta_compare, 'OR');
+
+		return $this;
+	}
+
+	/**
 	 * Skip the number of terms defined by skip
 	 *
 	 * @see https://developer.wordpress.org/reference/functions/get_terms/#parameters

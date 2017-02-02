@@ -346,6 +346,66 @@ abstract class PostModel
 	}
 
 	/**
+	 * Execute PostModel::where with meta_relation OR
+	 *
+	 * @see PostModel::where();
+	 *
+	 * @example ExamplePost::where('active', 1)->orWhere('spotlight', 'front')->get();
+	 *
+	 * @param string $meta_key
+	 * @param string $meta_value
+	 * @param string $meta_compare
+	 *
+	 * @return $this
+	 */
+	protected function orWhere($meta_key, $meta_value, $meta_compare = '=')
+	{
+		$this->where($meta_key, $meta_value, $meta_compare, 'OR');
+
+		return $this;
+	}
+
+	/**
+	 * Execute PostModel::where with meta_relation OR
+	 *
+	 * @see PostModel::where();
+	 *
+	 * @example ExamplePost::where('active', 1)->orWhere('spotlight', 'front')->get();
+	 *
+	 * @param string $meta_key
+	 * @param string $meta_value
+	 * @param string $meta_compare
+	 *
+	 * @return $this
+	 */
+	protected function orWhereDate($date_key, $date_value, $date_compare = '=')
+	{
+		$this->whereDate($date_key, $date_value, $date_compare, 'OR');
+
+		return $this;
+	}
+
+	/**
+	 * Execute PostModel::where with meta_relation OR
+	 *
+	 * @see PostModel::where();
+	 *
+	 * @example ExamplePost::where('active', 1)->orWhere('spotlight', 'front')->get();
+	 *
+	 * @param string $meta_key
+	 * @param string $meta_value
+	 * @param string $meta_compare
+	 *
+	 * @return $this
+	 */
+	protected function orWhereTax($tax_key, $tax_terms, $tax_compare = '=', $tax_fields = 'term_id')
+	{
+		$this->whereTax($tax_key, $tax_terms, $tax_compare, $tax_fields, 'OR');
+
+		return $this;
+	}
+
+	/**
 	 * Get the current page for paginated pages.
 	 * Will be used when you call ->paginate();
 	 *
@@ -480,27 +540,6 @@ abstract class PostModel
 
 		return $this;
 	}
-
-	/**
-	 * Execute PostModel::where with meta_relation OR
-	 *
-	 * @see PostModel::where();
-	 *
-	 * @example ExamplePost::where('active', 1)->orWhere('spotlight', 'front')->get();
-	 *
-	 * @param string $meta_key
-	 * @param string $meta_value
-	 * @param string $meta_compare
-	 *
-	 * @return $this
-	 */
-	protected function orWhere($meta_key, $meta_value, $meta_compare = '=')
-	{
-		$this->where($meta_key, $meta_value, $meta_compare, 'OR');
-
-		return $this;
-	}
-
 
 	/**
 	 * Get pages with by a certain meta query.

@@ -224,6 +224,26 @@ abstract class UserModel
 	}
 
 	/**
+	 * Execute UserModel::where with meta_relation OR
+	 *
+	 * @see UserModel::where();
+	 *
+	 * @example ExampleUser::where('active', 1)->orWhere('spotlight', 'front')->get();
+	 *
+	 * @param string $meta_key
+	 * @param string $meta_value
+	 * @param string $meta_compare
+	 *
+	 * @return $this
+	 */
+	protected function orWhere($meta_key, $meta_value, $meta_compare = '=')
+	{
+		$this->where($meta_key, $meta_value, $meta_compare, 'OR');
+
+		return $this;
+	}
+
+	/**
 	 * Skip the number of users defined by skip
 	 *
 	 * @see https://developer.wordpress.org/reference/classes/wp_user_query/prepare_query/#parameters
