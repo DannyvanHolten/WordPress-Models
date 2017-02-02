@@ -147,6 +147,7 @@ abstract class PostModel
 	 *
 	 * @see https://developer.wordpress.org/reference/classes/wp_query/#search-parameters
 	 * @see https://developer.wordpress.org/reference/classes/wp_query/#order-orderby-parameters
+	 * @see https://developer.wordpress.org/reference/classes/get_search_query
 	 * @see https://www.relevanssi.com/user-manual/functions/#relevanssi_do_query
 	 * @see Post::paginate();
 	 *
@@ -161,7 +162,7 @@ abstract class PostModel
 		$instance = new static;
 
 		if ($search == null) {
-			$search = $_GET['s'];
+			$search = get_search_query();
 		}
 
 		/*
