@@ -232,17 +232,20 @@ abstract class PostModel
 		$suppressFilters = false,
 		$connectedMeta = false
 	) {
-		if ($connectedItems === false) {
-			$connectedItems = get_queried_object_id();
-		}
+		if (function_exists('p2p_register_connection_type')) {
 
-		$this->args['connected_type'] = $connectedType;
-		$this->args['connected_items'] = $connectedItems;
-		$this->args['nopaging'] = $noPaging;
-		$this->args['suppress_filters'] = $suppressFilters;
+			if ($connectedItems === false) {
+				$connectedItems = get_queried_object_id();
+			}
 
-		if ($connectedMeta !== false) {
-			$this->args['connected_meta'] = $connectedMeta;
+			$this->args['connected_type'] = $connectedType;
+			$this->args['connected_items'] = $connectedItems;
+			$this->args['nopaging'] = $noPaging;
+			$this->args['suppress_filters'] = $suppressFilters;
+
+			if ($connectedMeta !== false) {
+				$this->args['connected_meta'] = $connectedMeta;
+			}
 		}
 
 		return $this;
