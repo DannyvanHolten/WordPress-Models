@@ -214,10 +214,11 @@ abstract class PostModel
 	 *
 	 * @see https://github.com/scribu/wp-posts-to-posts/wiki
 	 *
-	 * @todo: Add examples
+	 * @example ExamplePost::connected('posts_to_pages');
+	 * @example ExamplePost::connected('posts_to_pages', $post->ID);
 	 *
 	 * @param $connectedType
-	 * @param $connectedItems
+	 * @param int|false $connectedItems
 	 * @param bool|false $noPaging
 	 * @param bool|false $suppressFilters
 	 * @param bool|false $connectedMeta
@@ -226,11 +227,15 @@ abstract class PostModel
 	 */
 	protected function connected(
 		$connectedType,
-		$connectedItems,
+		$connectedItems = false,
 		$noPaging = false,
 		$suppressFilters = false,
 		$connectedMeta = false
 	) {
+		if ($connectedItems === false) {
+			$connectedItems = get_queried_object_id();
+		}
+
 		$this->args['connected_type'] = $connectedType;
 		$this->args['connected_items'] = $connectedItems;
 		$this->args['nopaging'] = $noPaging;
