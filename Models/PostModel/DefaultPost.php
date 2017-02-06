@@ -1,12 +1,12 @@
 <?php
 
-namespace Models\PostModel;
+namespace WordPessModels\PostModel;
 
 /**
  * This is the model if you want to get posts of the default post type.
  *
  * Class DefaultPost
- * @package Models\PostModel
+ * @package WordPessModels\PostModel
  */
 class DefaultPost extends PostModel
 {

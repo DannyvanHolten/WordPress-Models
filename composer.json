@@ -12,7 +12,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "Models\\": "Models/"
+      "Models\\": "WordPessModels/"
     }
   },
   "require": {

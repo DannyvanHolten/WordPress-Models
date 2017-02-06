@@ -1,12 +1,12 @@
 <?php
 
-namespace Models\PostModel;
+namespace WordPessModels\PostModel;
 
 /**
  * This is the model if you want to get posts of all the post types.
  *
  * Class Post
- * @package Models\PostModel
+ * @package WordPessModels\PostModel
  */
 class Post extends PostModel
 {

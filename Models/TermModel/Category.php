@@ -1,12 +1,12 @@
 <?php
 
-namespace Models\TermModel;
+namespace WordPessModels\TermModel;
 
 /**
  * This is the model if you want to get the terms of the Category Taxonomy
  *
  * Class Category
- * @package Models\TermModel
+ * @package WordPessModels\TermModel
  */
 class Category extends TermModel
 {

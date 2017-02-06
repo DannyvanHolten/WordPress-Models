@@ -1,8 +1,8 @@
 <?php
 
-namespace Models\UserModel;
+namespace WordPessModels\UserModel;
 
-use Models\PostModel\Post;
+use WordPessModels\PostModel\Post;
 use WP_Post;
 use WP_User;
 
@@ -15,7 +15,7 @@ use WP_User;
  * @see https://developer.wordpress.org/reference/functions/get_users/
  *
  * Class UserModel
- * @package Models\UserModel
+ * @package WordPessModels\UserModel
  */
 abstract class UserModel
 {

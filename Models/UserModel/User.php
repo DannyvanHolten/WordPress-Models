@@ -1,12 +1,12 @@
 <?php
 
-namespace Models\UserModel;
+namespace WordPessModels\UserModel;
 
 /**
  * This is the model if you want to get all the users
  *
  * Class User
- * @package Models\UserModel
+ * @package WordPessModels\UserModel
  */
 class User extends UserModel
 {
