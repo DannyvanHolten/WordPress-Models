@@ -1,6 +1,6 @@
 <?php
 
-namespace WordPessWordPressModels\PostModel;
+namespace WordPressModels\PostModel;
 
 use WP_Query;
 use WP_Post;
