@@ -1,6 +1,6 @@
 <?php
 
-namespace WordPessWordPessModels\PostModel;
+namespace WordPessWordPressModels\PostModel;
 
 use WP_Query;
 use WP_Post;
@@ -14,7 +14,7 @@ use WP_Post;
  * @see https://developer.wordpress.org/reference/classes/wp_query/
  *
  * Class PostModel
- * @package WordPessModels\PostModel
+ * @package WordPressModels\PostModel
  */
 abstract class PostModel
 {

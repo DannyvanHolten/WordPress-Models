@@ -1,12 +1,12 @@
 <?php
 
-namespace WordPessModels\TermModel;
+namespace WordPressModels\TermModel;
 
 /**
  * This is the model if you want to get the terms of the Category Taxonomy
  *
  * Class Category
- * @package WordPessModels\TermModel
+ * @package WordPressModels\TermModel
  */
 class Category extends TermModel
 {
