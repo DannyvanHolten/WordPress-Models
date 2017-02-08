@@ -1,12 +1,12 @@
 <?php
 
-namespace WordPessModels\UserModel;
+namespace WordPressModels\UserModel;
 
 /**
  * This is the model if you want to get all the users
  *
  * Class User
- * @package WordPessModels\UserModel
+ * @package WordPressModels\UserModel
  */
 class User extends UserModel
 {

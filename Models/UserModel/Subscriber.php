@@ -1,12 +1,12 @@
 <?php
 
-namespace WordPessModels\UserModel;
+namespace WordPressModels\UserModel;
 
 /**
  * This is the model if you want to get the users of the rol subscriber
  *
  * Class Subscriber
- * @package WordPessModels\UserModel
+ * @package WordPressModels\UserModel
  */
 class Subscriber extends UserModel
 {

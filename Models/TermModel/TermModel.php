@@ -1,6 +1,6 @@
 <?php
 
-namespace WordPessModels\TermModel;
+namespace WordPressModels\TermModel;
 
 use WP_Post;
 use WP_Term;
@@ -14,7 +14,7 @@ use WP_Term;
  * @see https://developer.wordpress.org/reference/functions/get_terms/
  *
  * Class TermModel
- * @package WordPessModels\TermModel
+ * @package WordPressModels\TermModel
  */
 abstract class TermModel
 {

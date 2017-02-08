@@ -1,12 +1,12 @@
 <?php
 
-namespace WordPessModels\PostModel;
+namespace WordPressModels\PostModel;
 
 /**
  * This is the model if you want to get posts of the page post type.
  *
  * Class Page
- * @package WordPessModels\PostModel
+ * @package WordPressModels\PostModel
  */
 class Page extends PostModel
 {
