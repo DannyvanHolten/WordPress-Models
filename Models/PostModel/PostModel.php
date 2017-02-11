@@ -107,7 +107,7 @@ abstract class PostModel
 		$instance = new static;
 
 		return $instance->take($take)
-			->paginate();
+			->runQuery();
 	}
 
 	/**
@@ -169,7 +169,7 @@ abstract class PostModel
 
 		$instance->args['s'] = $search;
 
-		return $instance->paginate();
+		return $instance->runQuery();
 	}
 
 	/**
