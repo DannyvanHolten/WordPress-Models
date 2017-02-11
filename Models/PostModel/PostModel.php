@@ -710,7 +710,6 @@ abstract class PostModel
 	 * @see Post::appendContent();
 	 * @see Post::appendExcerpt();
 	 * @see Post::appendPermalink();
-	 * @see Post::appendPagination();
 	 *
 	 * @example ExamplePost::where('active', 1)->paginate();
 	 *
