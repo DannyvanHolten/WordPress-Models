@@ -24,19 +24,14 @@ abstract class PostModel
 	 *
 	 * @var array
 	 */
-	protected $args = [];
+	public $args = [];
 
 	/**
 	 * The actual WP Query
 	 *
 	 * @var WP_Query
 	 */
-	protected $query = null;
-
-	/**
-	 * The results
-	 */
-	protected $results = null;
+	public $query = null;
 
 	/**
 	 * Send trough all our functions to real functions, so we don't need to make a new instance for everything
@@ -112,7 +107,7 @@ abstract class PostModel
 		$instance = new static;
 
 		return $instance->take($take)
-			->paginate();
+			->runQuery();
 	}
 
 	/**
@@ -174,7 +169,7 @@ abstract class PostModel
 
 		$instance->args['s'] = $search;
 
-		return $instance->paginate();
+		return $instance->runQuery();
 	}
 
 	/**
@@ -658,7 +653,8 @@ abstract class PostModel
 	 */
 	public function query()
 	{
-		$this->runQuery()
+		$this->paged()
+			->runQuery()
 			->appendAcfFields()
 			->appendContent()
 			->appendExcerpt()
@@ -709,7 +705,6 @@ abstract class PostModel
 	 * @see Post::appendContent();
 	 * @see Post::appendExcerpt();
 	 * @see Post::appendPermalink();
-	 * @see Post::appendPagination();
 	 *
 	 * @example ExamplePost::where('active', 1)->paginate();
 	 *
@@ -717,15 +712,10 @@ abstract class PostModel
 	 */
 	public function paginate()
 	{
-		$this->paged()
-			->runQuery()
-			->appendAcfFields()
-			->appendContent()
-			->appendExcerpt()
-			->appendPermalink()
-			->appendPagination();
+		$this->query()
+			->all();
 
-		return collect($this->results);
+		return collect($this->query->posts);
 	}
 
 	/**
@@ -808,32 +798,6 @@ abstract class PostModel
 
 				$post->post_excerpt = wpautop($post->post_excerpt); //Used because we always want <p> tags around the excerpt
 			}
-		}
-
-		return $this;
-	}
-
-	/**
-	 * Return the WP-Pagenavi navigation / Default WordPress Paginate links.
-	 *
-	 * @see https://github.com/lesterchan/wp-pagenavi
-	 * @see https://developer.wordpress.org/reference/functions/paginate_links/
-	 *
-	 * @return $this
-	 */
-	private function appendPagination()
-	{
-		$this->results['posts'] = $this->query->posts;
-
-		if (function_exists('wp_pagenavi')) {
-			$this->results['pagination'] = wp_pagenavi([
-				'query'         => $this->query,
-				'echo'          => false,
-				'wrapper_tag'   => 'nav',
-				'wrapper_class' => 'pagination'
-			]);
-		} else {
-			$this->results['pagination'] = paginate_links();
 		}
 
 		return $this;

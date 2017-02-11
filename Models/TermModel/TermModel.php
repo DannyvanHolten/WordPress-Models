@@ -23,21 +23,21 @@ abstract class TermModel
 	 *
 	 * @var array
 	 */
-	protected $args = [];
+	public $args = [];
 
 	/**
 	 * The terms
 	 *
 	 * @var array
 	 */
-	protected $terms = null;
+	public $terms = null;
 
 	/**
 	 * The post
 	 *
 	 * @var array
 	 */
-	protected $post = null;
+	public $post = null;
 
 	/**
 	 * Send trough all our functions to real functions, so we don't need to make a new instance for everything
