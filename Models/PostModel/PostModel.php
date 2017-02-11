@@ -24,19 +24,14 @@ abstract class PostModel
 	 *
 	 * @var array
 	 */
-	protected $args = [];
+	public $args = [];
 
 	/**
 	 * The actual WP Query
 	 *
 	 * @var WP_Query
 	 */
-	protected $query = null;
-
-	/**
-	 * The results
-	 */
-	protected $results = null;
+	public $query = null;
 
 	/**
 	 * Send trough all our functions to real functions, so we don't need to make a new instance for everything

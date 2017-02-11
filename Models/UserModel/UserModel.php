@@ -24,14 +24,14 @@ abstract class UserModel
 	 *
 	 * @var array
 	 */
-	protected $args = [];
+	public $args = [];
 
 	/**
 	 * The users
 	 *
 	 * @var array
 	 */
-	protected $users = null;
+	public $users = null;
 
 	/**
 	 * Send trough all our functions to real functions, so we don't need to make a new instance for everything
