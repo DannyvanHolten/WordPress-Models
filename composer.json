@@ -23,7 +23,6 @@
   "suggests": {
     "wpackagist-plugin/advanced-custom-fields": "*",
     "wpackagist-plugin/relevanssi": "*",
-    "wpackagist-plugin/wp-pagenavi": "*",
     "wpackagist-plugin/posts-to-posts": "*"
   }
 }
