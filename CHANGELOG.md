@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v0.4] - 17-02-2016
+- Add an apply filters function after the query is run in the runQuery function
+
 ## [v0.3] - 11-02-2016
 ### Added
 - Added a changelog
@@ -27,7 +30,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Changed the namespacing of the models.
 
-[Unreleased]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.3...develop
+[Unreleased]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.4...develop
+[v0.4]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.3...v0.4
 [v0.3]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.2.1...v0.3
 [v0.2.1]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.2...v0.2.1
 [v0.2]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.1...v0.2
