@@ -841,6 +841,8 @@ abstract class PostModel
 			relevanssi_do_query($this->query);
 		}
 
+		$this->query = apply_filters('after_run_query', $this->query);
+
 		return $this;
 	}
 }
