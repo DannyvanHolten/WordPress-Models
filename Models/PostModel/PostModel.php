@@ -795,6 +795,7 @@ abstract class PostModel
 					$post->post_excerpt = apply_filters('the_content', $post->post_excerpt);
 					$post->post_excerpt = substr(strip_tags($post->post_excerpt), 0,
 						apply_filters('excerpt_length', strip_tags($post->post_excerpt)));
+					$post->post_excerpt = apply_filters( 'excerpt_more', $post->post_excerpt);
 				}
 
 				$post->post_excerpt = wpautop($post->post_excerpt); //Used because we always want <p> tags around the excerpt
