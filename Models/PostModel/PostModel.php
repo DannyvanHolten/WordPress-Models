@@ -107,7 +107,7 @@ abstract class PostModel
 		$instance = new static;
 
 		return $instance->take($take)
-			->runQuery();
+			->query();
 	}
 
 	/**
