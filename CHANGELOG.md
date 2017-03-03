@@ -4,8 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v0.4.3] - 03-03-2016
+- PostModel now also directly applies the excerpt more filter
+
+## [v0.4.2] - 21-02-2016
+- PostModel now also directly applies the excerpt more filter
+
 ## [v0.4.1] - 20-02-2016
-- WP trim excerpt doesn't actually trim the excerpt. PostModel now works directly with the excerpt length fikter
+- WP trim excerpt doesn't actually trim the excerpt. PostModel now works directly with the excerpt length filter
 
 ## [v0.4] - 17-02-2016
 - Add an apply filters function after the query is run in the runQuery function
