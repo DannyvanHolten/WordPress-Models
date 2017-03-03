@@ -653,8 +653,7 @@ abstract class PostModel
 	 */
 	public function query()
 	{
-		$this->paged()
-			->runQuery()
+		$this->runQuery()
 			->appendAcfFields()
 			->appendContent()
 			->appendExcerpt()
@@ -834,6 +833,8 @@ abstract class PostModel
 	 */
 	private function runQuery()
 	{
+		$this->paged();
+
 		if (!isset($this->query->posts)) {
 			$this->query = new WP_Query($this->args);
 		}
