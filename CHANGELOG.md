@@ -4,8 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v0.5] - 03-03-2016
+- Added appendDate function to the postmodel
+
+## [v0.4.3] - 03-03-2016
+- Paged function moved from query function to runQuery function
+
+## [v0.4.2] - 21-02-2016
+- PostModel now also directly applies the excerpt more filter
+
 ## [v0.4.1] - 20-02-2016
-- WP trim excerpt doesn't actually trim the excerpt. PostModel now works directly with the excerpt length fikter
+- WP trim excerpt doesn't actually trim the excerpt. PostModel now works directly with the excerpt length filter
 
 ## [v0.4] - 17-02-2016
 - Add an apply filters function after the query is run in the runQuery function
@@ -33,8 +42,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Changed the namespacing of the models.
 
-[Unreleased]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.4...develop
-[v0.4]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.3...v0.4
+[Unreleased]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.5...develop
+[v0.4.3]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.4.3...v0.5
+[v0.4.3]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.4.2...v0.4.3
+[v0.4.2]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.4.1...v0.4.2
+[v0.4.2]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.4...v0.4.1
+[v0.4.1]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.3...v0.4
 [v0.3]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.2.1...v0.3
 [v0.2.1]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.2...v0.2.1
 [v0.2]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.1...v0.2
