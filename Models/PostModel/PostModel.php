@@ -656,6 +656,7 @@ abstract class PostModel
 		$this->runQuery()
 			->appendAcfFields()
 			->appendContent()
+			->appendDate()
 			->appendExcerpt()
 			->appendPermalink();
 
@@ -768,6 +769,25 @@ abstract class PostModel
 		foreach ($this->query->posts as $post) {
 			if ($post instanceof WP_Post) {
 				$post->post_content = apply_filters('the_content', $post->post_content);
+			}
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Append a date & time according to our date & time format in the WordPress options
+	 *
+	 * @see https://developer.wordpress.org/reference/functions/date_i18n/
+	 *
+	 * @return $this
+	 */
+	private function appendDate()
+	{
+		foreach ($this->query->posts as $post) {
+			if ($post instanceof WP_Post) {
+				$post->date = date_i18n(get_option('date_format'), strtotime($post->post_date));
+				$post->time = date_i18n(get_option('time_format'), strtotime($post->post_date));
 			}
 		}
 
