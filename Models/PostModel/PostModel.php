@@ -748,7 +748,7 @@ abstract class PostModel
 	{
 		if (function_exists('get_fields')) {
 			foreach ($this->query->posts as $post) {
-				if ($post instanceof WP_Post) {
+				if (is_object($post)) {
 					$post->fields = get_fields($post->ID);
 				}
 			}
@@ -767,7 +767,7 @@ abstract class PostModel
 	private function appendContent()
 	{
 		foreach ($this->query->posts as $post) {
-			if ($post instanceof WP_Post) {
+			if (is_object($post)) {
 				$post->post_content = apply_filters('the_content', $post->post_content);
 			}
 		}
@@ -785,7 +785,7 @@ abstract class PostModel
 	private function appendDate()
 	{
 		foreach ($this->query->posts as $post) {
-			if ($post instanceof WP_Post) {
+			if (is_object($post)) {
 				$post->date = date_i18n(get_option('date_format'), strtotime($post->post_date));
 				$post->time = date_i18n(get_option('time_format'), strtotime($post->post_date));
 			}
@@ -808,13 +808,13 @@ abstract class PostModel
 	{
 		foreach ($this->query->posts as $post) {
 
-			if ($post instanceof WP_Post) {
+			if (is_object($post)) {
 				if ($post->post_excerpt === '') {
 					$post->post_excerpt = strip_shortcodes($post->post_content);
 					$post->post_excerpt = apply_filters('the_content', $post->post_excerpt);
 					$post->post_excerpt = substr(strip_tags($post->post_excerpt), 0,
 						apply_filters('excerpt_length', strip_tags($post->post_excerpt)));
-					$post->post_excerpt = $post->post_excerpt . apply_filters( 'excerpt_more', $post->post_excerpt);
+					$post->post_excerpt = $post->post_excerpt . apply_filters('excerpt_more', $post->post_excerpt);
 				}
 
 				$post->post_excerpt = wpautop($post->post_excerpt); //Used because we always want <p> tags around the excerpt
@@ -834,7 +834,7 @@ abstract class PostModel
 	private function appendPermalink()
 	{
 		foreach ($this->query->posts as $post) {
-			if ($post instanceof WP_Post) {
+			if (is_object($post)) {
 				$post->permalink = get_the_permalink($post->ID);
 			}
 		}

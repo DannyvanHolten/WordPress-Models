@@ -484,7 +484,7 @@ abstract class TermModel
 	{
 		if (function_exists('get_fields')) {
 			foreach ($this->terms as $term) {
-				if ($term instanceof WP_Term) {
+				if (is_object($term)) {
 					$term->fields = get_fields($term->taxonomy . '_' . $term->term_id);
 				}
 			}
@@ -503,7 +503,7 @@ abstract class TermModel
 	private function appendContent()
 	{
 		foreach ($this->terms as $term) {
-			if ($term instanceof WP_Term) {
+			if (is_object($term)) {
 				$term->description = wpautop($term->description);
 			}
 		}
@@ -521,7 +521,7 @@ abstract class TermModel
 	private function appendPermalink()
 	{
 		foreach ($this->terms as $term) {
-			if ($term instanceof WP_Term) {
+			if (is_object($term)) {
 				$term->permalink = get_term_link($term->term_id);
 			}
 		}
