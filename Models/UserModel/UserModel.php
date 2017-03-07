@@ -470,7 +470,7 @@ abstract class UserModel
 	{
 		if (function_exists('get_fields')) {
 			foreach ($this->users as $user) {
-				if ($user instanceof WP_User) {
+				if (is_object($user)) {
 					$user->fields = get_fields('user_' . $user->ID);
 				}
 			}
@@ -490,7 +490,7 @@ abstract class UserModel
 	private function appendPermalink()
 	{
 		foreach ($this->users as $user) {
-			if ($user instanceof WP_User) {
+			if (is_object($user)) {
 				$user->permalink = get_author_posts_url($user->ID);
 			}
 		}

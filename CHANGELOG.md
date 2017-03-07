@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v0.5.1] - 07-03-2016
+- Changed the check for instances of different object to a normal is_object check because of relevanssi casting stdClass objects.
+
 ## [v0.5] - 03-03-2016
 - Added appendDate function to the postmodel
 
