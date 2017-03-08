@@ -897,6 +897,6 @@ abstract class PostModel
 			$instance->postTypeObject = $postTypeObject;
 		}
 
-		return $instance;
+		return $instance->postTypeObject;
 	}
 }
