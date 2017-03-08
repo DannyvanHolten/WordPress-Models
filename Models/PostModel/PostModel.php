@@ -868,4 +868,35 @@ abstract class PostModel
 
 		return $this;
 	}
+
+	/**
+	 * Get the post type object, the archive link & the fields correspondig with the options page of the same name.
+	 *
+	 * @see https://developer.wordpress.org/reference/functions/post_type_exists/
+	 * @see https://developer.wordpress.org/reference/functions/get_post_type_object/
+	 * @see https://developer.wordpress.org/reference/functions/get_post_type_archive_link/
+	 * @see https://www.advancedcustomfields.com/resources/get_fields/
+	 *
+	 * @return static
+	 */
+	public static function getObject()
+	{
+		$instance = new static;
+		$postType = $instance->args['post_type'];
+
+		if (post_type_exists($postType)) {
+
+			$postTypeObject = get_post_type_object($postType);
+			$postTypeObject->permalink = get_post_type_archive_link($postType);
+
+			// Get the fields of the object (options page specific for this post type
+			if (function_exists('get_fields')) {
+				$postTypeObject->fields = get_fields($postType);
+			}
+
+			$instance->postTypeObject = $postTypeObject;
+		}
+
+		return $instance;
+	}
 }
