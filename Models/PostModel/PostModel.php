@@ -813,7 +813,6 @@ abstract class PostModel
 	 */
 	private function appendDate()
 	{
-	{
 		foreach ($this->query->posts as $post) {
 			if (is_object($post)) {
 				$post->date = date_i18n(get_option('date_format'), strtotime($post->post_date));
