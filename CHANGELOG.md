@@ -9,35 +9,35 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Changed the fields function so it also accepts permalink, and in stead of an object or an integer. You are able to get the permalink
 * Added andWhere function as a placeholder function for where with 'AND' relation
 
-## [v0.6] - 08-03-2016
+## [0.6] - 08-03-2016
 ### Added
 * Added a getObject function to get the post type object
 
-## [v0.5.1] - 07-03-2016
+## [0.5.1] - 07-03-2016
 ### Changed
 * Changed the check for instances of different object to a normal is_object check because of relevanssi casting stdClass objects.
 
-## [v0.5] - 03-03-2016
+## [0.5] - 03-03-2016
 ### Added
 * Added appendDate function to the postmodel
 
-## [v0.4.3] - 03-03-2016
+## [0.4.3] - 03-03-2016
 ### Changed
 * Paged function moved from query function to runQuery function
 
-## [v0.4.2] - 21-02-2016
+## [0.4.2] - 21-02-2016
 ### Fixed
 * PostModel now also directly applies the excerpt more filter
 
-## [v0.4.1] - 20-02-2016
+## [0.4.1] - 20-02-2016
 ### Fixed
 * WP trim excerpt doesn't actually trim the excerpt. PostModel now works directly with the excerpt length filter
 
-## [v0.4] - 17-02-2016
+## [0.4] - 17-02-2016
 ### Added
 * Add an apply filters function after the query is run in the runQuery function
 
-## [v0.3] - 11-02-2016
+## [0.3] - 11-02-2016
 ### Added
 * Added a changelog
 
@@ -46,11 +46,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Removed wp_pagenavi from the suggestions as it is not included in the model anymore.
 * Changed the variables in the models from protect to public because of possible & allowed usage outside of the model.
 
-## [v0.2.1] - 08-02-2016
+## [0.2.1] - 08-02-2016
 ### Fixed
 - Fixed a typo in the namespacing and the autoloader.
 
-## [v0.2] - 06-02-2016
+## [0.2] - 06-02-2016
 ### Added
 * Added a class UserModel/User to get all users.
 * Added a class UserModel/Subscriber to get all the subscriber users.
@@ -61,14 +61,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Changed the namespacing of the models.
 
 [Unreleased]: https://github.com/DannyvanHolten/WordPress-Models/compare/0.7...develop
-[0.7]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.6...0.7
-[v0.6]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.5.1...v0.6
-[v0.5.1]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.5...v0.5.1
-[v0.5]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.4.3...v0.5
-[v0.4.3]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.4.2...v0.4.3
-[v0.4.2]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.4.1...v0.4.2
-[v0.4.2]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.4...v0.4.1
-[v0.4.1]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.3...v0.4
-[v0.3]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.2.1...v0.3
-[v0.2.1]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.2...v0.2.1
-[v0.2]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.1...v0.2
+[0.7]: https://github.com/DannyvanHolten/WordPress-Models/compare/0.6...0.7
+[0.6]: https://github.com/DannyvanHolten/WordPress-Models/compare/0.5.1...0.6
+[0.5.1]: https://github.com/DannyvanHolten/WordPress-Models/compare/0.5...0.5.1
+[0.5]: https://github.com/DannyvanHolten/WordPress-Models/compare/0.4.3...0.5
+[0.4.3]: https://github.com/DannyvanHolten/WordPress-Models/compare/0.4.2...0.4.3
+[0.4.2]: https://github.com/DannyvanHolten/WordPress-Models/compare/0.4.1...0.4.2
+[0.4.2]: https://github.com/DannyvanHolten/WordPress-Models/compare/0.4...0.4.1
+[0.4.1]: https://github.com/DannyvanHolten/WordPress-Models/compare/0.3...0.4
+[0.3]: https://github.com/DannyvanHolten/WordPress-Models/compare/0.2.1...0.3
+[0.2.1]: https://github.com/DannyvanHolten/WordPress-Models/compare/0.2...0.2.1
+[0.2]: https://github.com/DannyvanHolten/WordPress-Models/compare/0.1...0.2
