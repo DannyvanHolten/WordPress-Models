@@ -247,7 +247,8 @@ abstract class PostModel
 	}
 
 	/**
-	 * Get only certain fields instead of entire WP_Post objects
+	 * Get only certain fields instead of entire WP_Post objects.
+	 * Also accepts permalink in addition to the WordPress defaults
 	 *
 	 * @see https://codex.wordpress.org/Class_Reference/WP_Query#Return_Fields_Parameter
 	 *
@@ -259,8 +260,16 @@ abstract class PostModel
 	 */
 	protected function fields($fields = null)
 	{
-		if ($fields !== null) {
-			$this->args['fields'] = $fields;
+
+		switch ($fields) {
+			case 'permalink':
+				$this->args['fieldPermalink'] = true;
+				$this->args['fields'] = 'ids';
+				break;
+			case null:
+				break;
+			default:
+				$this->args['fields'] = $fields;
 		}
 
 		return $this;
@@ -826,6 +835,7 @@ abstract class PostModel
 
 	/**
 	 * Add the permalink to our query result
+	 * Also if our custom fields value is permalink
 	 *
 	 * @see https://developer.wordpress.org/reference/functions/get_the_permalink/
 	 *
@@ -833,9 +843,11 @@ abstract class PostModel
 	 */
 	private function appendPermalink()
 	{
-		foreach ($this->query->posts as $post) {
+		foreach ($this->query->posts as &$post) {
 			if (is_object($post)) {
 				$post->permalink = get_the_permalink($post->ID);
+			} elseif (is_int($post) && isset($this->args['fieldPermalink'])) {
+				$post = get_the_permalink($post);
 			}
 		}
 

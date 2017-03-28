@@ -4,32 +4,46 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.7] - 29-03-2016
+### Added
+* Changed the fields function so it also accepts permalink, and in stead of an object or an integer. You are able to get the permalink
+
+## [v0.6] - 08-03-2016
+### Added
+* Added a getObject function to get the post type object
+
 ## [v0.5.1] - 07-03-2016
-- Changed the check for instances of different object to a normal is_object check because of relevanssi casting stdClass objects.
+### Changed
+* Changed the check for instances of different object to a normal is_object check because of relevanssi casting stdClass objects.
 
 ## [v0.5] - 03-03-2016
-- Added appendDate function to the postmodel
+### Added
+* Added appendDate function to the postmodel
 
 ## [v0.4.3] - 03-03-2016
-- Paged function moved from query function to runQuery function
+### Changed
+* Paged function moved from query function to runQuery function
 
 ## [v0.4.2] - 21-02-2016
-- PostModel now also directly applies the excerpt more filter
+### Fixed
+* PostModel now also directly applies the excerpt more filter
 
 ## [v0.4.1] - 20-02-2016
-- WP trim excerpt doesn't actually trim the excerpt. PostModel now works directly with the excerpt length filter
+### Fixed
+* WP trim excerpt doesn't actually trim the excerpt. PostModel now works directly with the excerpt length filter
 
 ## [v0.4] - 17-02-2016
-- Add an apply filters function after the query is run in the runQuery function
+### Added
+* Add an apply filters function after the query is run in the runQuery function
 
 ## [v0.3] - 11-02-2016
 ### Added
-- Added a changelog
+* Added a changelog
 
 ### Changed
-- Changed the paginate function as show a pagination does not belong to a model.
-- Removed wp_pagenavi from the suggestions as it is not included in the model anymore.
-- Changed the variables in the models from protect to public because of possible & allowed usage outside of the model.
+* Changed the paginate function as show a pagination does not belong to a model.
+* Removed wp_pagenavi from the suggestions as it is not included in the model anymore.
+* Changed the variables in the models from protect to public because of possible & allowed usage outside of the model.
 
 ## [v0.2.1] - 08-02-2016
 ### Fixed
@@ -37,16 +51,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [v0.2] - 06-02-2016
 ### Added
-- Added a class UserModel/User to get all users.
-- Added a class UserModel/Subscriber to get all the subscriber users.
-- Added a class TermModel/Category to get all the category terms.
-- Added requirements and suggestions to the composer file.
+* Added a class UserModel/User to get all users.
+* Added a class UserModel/Subscriber to get all the subscriber users.
+* Added a class TermModel/Category to get all the category terms.
+* Added requirements and suggestions to the composer file.
 
 ### Changed
-- Changed the namespacing of the models.
+* Changed the namespacing of the models.
 
-[Unreleased]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.5...develop
-[v0.4.3]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.4.3...v0.5
+[Unreleased]: https://github.com/DannyvanHolten/WordPress-Models/compare/0.7...develop
+[0.7]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.6...0.7
+[v0.6]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.5.1...v0.6
+[v0.5.1]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.5...v0.5.1
+[v0.5]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.4.3...v0.5
 [v0.4.3]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.4.2...v0.4.3
 [v0.4.2]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.4.1...v0.4.2
 [v0.4.2]: https://github.com/DannyvanHolten/WordPress-Models/compare/v0.4...v0.4.1
