@@ -125,6 +125,26 @@ abstract class TermModel
 	}
 
 	/**
+	 * Execute TermModel::where with meta_relation AND
+	 *
+	 * @see TermModel::where();
+	 *
+	 * @example ExampleTerm::where('active', 1)->andWhere('spotlight', 'front')->get();
+	 *
+	 * @param string $meta_key
+	 * @param string $meta_value
+	 * @param string $meta_compare
+	 *
+	 * @return $this
+	 */
+	protected function andWhere($meta_key, $meta_value, $meta_compare = '=')
+	{
+		$this->where($meta_key, $meta_value, $meta_compare, 'AND');
+
+		return $this;
+	}
+
+	/**
 	 * Get only certain fields instead of entire Term objects
 	 *
 	 * @see https://developer.wordpress.org/reference/functions/get_terms/#parameters

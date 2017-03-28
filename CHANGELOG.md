@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.7] - 29-03-2016
 ### Added
 * Changed the fields function so it also accepts permalink, and in stead of an object or an integer. You are able to get the permalink
+* Added andWhere function as a placeholder function for where with 'AND' relation
 
 ## [v0.6] - 08-03-2016
 ### Added

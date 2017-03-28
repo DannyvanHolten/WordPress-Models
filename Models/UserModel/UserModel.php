@@ -136,6 +136,26 @@ abstract class UserModel
 	}
 
 	/**
+	 * Execute UserModel::where with meta_relation AND
+	 *
+	 * @see UserModel::where();
+	 *
+	 * @example ExampleUser::where('active', 1)->andWhere('spotlight', 'front')->get();
+	 *
+	 * @param string $meta_key
+	 * @param string $meta_value
+	 * @param string $meta_compare
+	 *
+	 * @return $this
+	 */
+	protected function andWhere($meta_key, $meta_value, $meta_compare = '=')
+	{
+		$this->where($meta_key, $meta_value, $meta_compare, 'AND');
+
+		return $this;
+	}
+
+	/**
 	 * Return users where they have a certain ID / Login
 	 *
 	 * @see https://developer.wordpress.org/reference/classes/wp_user_query/prepare_query/#parameters
