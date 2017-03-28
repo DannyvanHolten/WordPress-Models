@@ -137,8 +137,15 @@ abstract class TermModel
 	 */
 	protected function fields($fields = null)
 	{
-		if ($fields !== null) {
-			$this->args['fields'] = $fields;
+		switch ($fields) {
+			case 'permalink':
+				$this->args['fieldPermalink'] = true;
+				$this->args['fields'] = 'ids';
+				break;
+			case null:
+				break;
+			default:
+				$this->args['fields'] = $fields;
 		}
 
 		return $this;
@@ -520,9 +527,11 @@ abstract class TermModel
 	 */
 	private function appendPermalink()
 	{
-		foreach ($this->terms as $term) {
+		foreach ($this->terms as &$term) {
 			if (is_object($term)) {
 				$term->permalink = get_term_link($term->term_id);
+			} elseif (is_int($term) && isset($this->args['fieldPermalink'])) {
+				$term = get_term_link($term);
 			}
 		}
 

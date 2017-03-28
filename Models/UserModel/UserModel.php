@@ -186,8 +186,15 @@ abstract class UserModel
 	 */
 	protected function fields($fields = null)
 	{
-		if ($fields !== null) {
-			$this->args['fields'] = $fields;
+		switch ($fields) {
+			case 'permalink':
+				$this->args['fieldPermalink'] = true;
+				$this->args['fields'] = 'ids';
+				break;
+			case null:
+				break;
+			default:
+				$this->args['fields'] = $fields;
 		}
 
 		return $this;
@@ -395,7 +402,7 @@ abstract class UserModel
 	 * @see UserModel::appendAcfFields();
 	 * @see UserModel::appendPermalink();
 	 *
-	 * @example ExampleUser::take(10)->query	();
+	 * @example ExampleUser::take(10)->query    ();
 	 *
 	 * @return array
 	 */
@@ -489,9 +496,11 @@ abstract class UserModel
 	 */
 	private function appendPermalink()
 	{
-		foreach ($this->users as $user) {
+		foreach ($this->users as &$user) {
 			if (is_object($user)) {
 				$user->permalink = get_author_posts_url($user->ID);
+			} elseif (is_int($user) && isset($this->args['fieldPermalink'])) {
+				$user = get_the_permalink($user);
 			}
 		}
 
