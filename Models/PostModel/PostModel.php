@@ -837,16 +837,27 @@ abstract class PostModel
 	{
 		foreach ($this->query->posts as $post) {
 
-			if (is_object($post)) {
-				if ($post->post_excerpt === '') {
-					$post->post_excerpt = strip_shortcodes($post->post_content);
-					$post->post_excerpt = apply_filters('the_content', $post->post_excerpt);
-					$post->post_excerpt = substr(strip_tags($post->post_excerpt), 0,
-						apply_filters('excerpt_length', strip_tags($post->post_excerpt)));
-					$post->post_excerpt = $post->post_excerpt . apply_filters('excerpt_more', $post->post_excerpt);
+			if ($post->post_excerpt === '') {
+				$post->post_excerpt = apply_filters('the_content', $post->post_content);
+				$post->post_excerpt = strip_tags(strip_shortcodes($post->post_content));
+				$post->post_excerpt = preg_replace('/\r|\n/', ' ', $post->post_excerpt);
+
+				// Make the post_excerpt based on words
+				$explodeContent = explode(' ', $post->post_excerpt);
+				$characterCount = 0;
+
+				foreach ($explodeContent as $word) {
+					$characterCount += (strlen($word) + 1);
+					if ($characterCount >= Config::get('theme.excerpt-length')) {
+						if ($characterCount - Config::get('theme.excerpt-length') > 10) {
+							$characterCount -= (strlen($word) - 1);
+						}
+						break;
+					}
 				}
 
-				$post->post_excerpt = wpautop($post->post_excerpt); //Used because we always want <p> tags around the excerpt
+				$post->post_excerpt = substr($post->post_excerpt, 0, ($characterCount - 1));
+
 			}
 		}
 
