@@ -848,8 +848,8 @@ abstract class PostModel
 
 				foreach ($explodeContent as $word) {
 					$characterCount += (strlen($word) + 1);
-					if ($characterCount >= Config::get('theme.excerpt-length')) {
-						if ($characterCount - Config::get('theme.excerpt-length') > 10) {
+					if ($characterCount >= apply_filters('excerpt_length', strip_tags($post->post_excerpt))) {
+						if ($characterCount - apply_filters('excerpt_length', strip_tags($post->post_excerpt)) > 10) {
 							$characterCount -= (strlen($word) - 1);
 						}
 						break;

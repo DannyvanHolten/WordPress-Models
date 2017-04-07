@@ -4,8 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [0.8] - 04-04-2017
-### Changed the post excerpt function to cut words instead of characterd
+## [0.8.1] - 04-04-2017
+### Changed 
+* Changed the post excerpt function to cut words instead of characters
 
 ## [0.7] - 29-03-2017
 ### Added
@@ -64,6 +65,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Changed the namespacing of the models.
 
 [Unreleased]: https://github.com/DannyvanHolten/WordPress-Models/compare/0.8...develop
+[0.8.1]: https://github.com/DannyvanHolten/WordPress-Models/compare/0.8...0.8.1
 [0.8]: https://github.com/DannyvanHolten/WordPress-Models/compare/0.7...0.8
 [0.7]: https://github.com/DannyvanHolten/WordPress-Models/compare/0.6...0.7
 [0.6]: https://github.com/DannyvanHolten/WordPress-Models/compare/0.5.1...0.6
