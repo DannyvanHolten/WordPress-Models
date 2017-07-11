@@ -856,7 +856,7 @@ abstract class PostModel
 					}
 				}
 
-				$post->post_excerpt = substr($post->post_excerpt, 0, ($characterCount - 1));
+				$post->post_excerpt = mb_substr($post->post_excerpt, 0, ($characterCount - 1));
 
 			}
 		}
